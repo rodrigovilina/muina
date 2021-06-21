@@ -1,0 +1,18 @@
+---
+integration: rspec
+
+includes:
+  - lib
+
+requires:
+  - muina
+
+matcher:
+  subjects:
+    - Muina::Classes*
+    - Muina::Params*
+    - Muina::PrivateCreation*
+    - Muina::Result*
+    - Muina::Service*
+    - Muina::Value*
+    - Muina::Version*
