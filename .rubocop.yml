@@ -1,0 +1,20 @@
+---
+AllCops:
+  NewCops: enable
+
+Metrics/MethodLength:
+  Max: 5
+
+Style/Alias:
+  Description: Use alias instead of alias_method.
+  EnforcedStyle: prefer_alias_method
+  SupportedStyles:
+    - prefer_alias
+    - prefer_alias_method
+
+Style/EmptyCaseCondition:
+  Enabled: false
+
+Style/LambdaCall:
+  Description: Use lambda.call(...) instead of lambda.(...).
+  Enabled: false
