@@ -31,4 +31,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'sorbet-rails'
   spec.add_dependency 'sorbet-runtime'
   spec.add_dependency 'sorbet-struct-comparable'
+  spec.add_dependency 'zeitwerk'
 end
