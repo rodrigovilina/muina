@@ -1,0 +1,18 @@
+# typed: strict
+# frozen_string_literal: true
+
+# module Muina
+#   # T::Types::Union builder
+#   module Any
+#     # See T.any
+#     # T::Utils usage was necessary at the point of writting
+#     T::Sig::WithoutRuntime.sig { params(array: T::Array[Class]).returns(T::Types::Union) }
+#     def self.call(array)
+#       type_a = array.shift
+#       type_b = array.shift
+#       types = array.map { |t| T::Utils.coerce(t) } unless array.empty?
+#
+#       T.cast(T.any(type_a, type_b, types), T::Types::Union)
+#     end
+#   end
+# end
