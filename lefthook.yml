@@ -1,0 +1,22 @@
+---
+audit:
+  commands:
+    rspec:
+      run: bin/rspec
+    rubocop:
+      run: bin/rubocop -fs
+    sorbet:
+      run: bin/srb tc
+
+full_audit:
+  commands:
+    flay:
+      run: bin/flay .
+    mutant:
+      run: bin/mutant run
+    rspec:
+      run: bin/rspec
+    rubocop:
+      run: bin/rubocop -fs
+    sorbet:
+      run: bin/srb tc
