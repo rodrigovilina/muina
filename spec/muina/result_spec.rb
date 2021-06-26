@@ -45,12 +45,6 @@ RSpec.describe Muina::Result do
     it do
       value = 1
       success = described_class[Integer, T.untyped].success(value)
-      expect(success.value).to be(value)
-    end
-
-    it do
-      value = 1
-      success = described_class[Integer, T.untyped].success(value)
       expect { success.error }.to raise_error(Muina::Error)
     end
   end
