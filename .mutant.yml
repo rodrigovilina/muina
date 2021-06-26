@@ -14,5 +14,6 @@ matcher:
     - Muina::PrivateCreation*
     - Muina::Result*
     - Muina::Service*
+    - Muina::Utils*
     - Muina::Value*
     - Muina::Version*
