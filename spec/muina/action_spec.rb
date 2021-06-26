@@ -61,14 +61,4 @@ RSpec.describe Muina::Action do
       expect { mismatch.call }.to raise_error(TypeError)
     end
   end
-
-  # describe '.steps' do
-  #   xit do
-  #     expect do
-  #       Class.new(described_class) do
-  #         @steps = {}
-  #       end.steps
-  #     end.to raise_error(TypeError)
-  #   end
-  # end
 end
