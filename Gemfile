@@ -7,6 +7,7 @@ gemspec
 
 gem 'awesome_print'
 gem 'byebug'
+gem 'flay'
 gem 'irb'
 gem 'lefthook'
 gem 'mutant'
