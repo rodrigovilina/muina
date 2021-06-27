@@ -10,7 +10,7 @@ module Muina
   Unit = Class.new do
     include Singleton
   end
-  VERSION = '0.1.0'
+  VERSION = '0.1.1'
 
   class Error < StandardError
   end
@@ -22,12 +22,12 @@ module Muina
     include T::Props
     include T::Props::Constructor
 
-    sig { params(params: T.any(T::Hash[T.untyped, T.untyped], ActionController::Parameters)).returns(T.attached_class) }
+    sig { params(params: T.untyped).returns(T.untyped) }
     def self.extract(params); end
   end
 
   module PrivateCreation
-    sig { params(klass: Module).void }
+    sig { params(klass: T.untyped).returns(T.untyped) }
     def self.included(klass); end
   end
 
@@ -37,10 +37,10 @@ module Muina
     sig { params(success_klass: T.untyped, error_klass: T.untyped).returns(T.untyped) }
     def self.[](success_klass, error_klass); end
 
-    sig { params(value: T.untyped).returns(T.attached_class) }
+    sig { params(value: T.untyped).returns(T.untyped) }
     def self.success(value); end
 
-    sig { params(error: T.untyped).returns(T.attached_class) }
+    sig { params(error: T.untyped).returns(T.untyped) }
     def self.failure(error); end
   end
 
@@ -62,6 +62,20 @@ module Muina
     def perform; end
   end
 
+  module Utils
+    sig { params(errors: T.untyped).returns(T::Array[T.untyped]) }
+    def self.cast_to_errors(*errors); end
+
+    sig { params(type: BasicObject).returns(T.untyped) }
+    def self.cast_to_error(type); end
+
+    sig { params(error: T::Types::Union).returns(T::Array[T.untyped]) }
+    def self.cast_union_to_errors(error); end
+
+    sig { params(failure_klass: Classes).returns(Module) }
+    def self.errors_rescue_module(failure_klass); end
+  end
+
   class Value
     include T::Props
     include T::Props::Constructor
@@ -69,5 +83,44 @@ module Muina
 
     sig { params(hash: T::Hash[Symbol, T.untyped]).void }
     def initialize(hash = {}); end
+  end
+
+  class Action
+    include T::Props
+    include T::Props::Constructor
+
+    sig { returns(T.untyped) }
+    def self.steps; end
+
+    sig { returns(T.untyped) }
+    def self.success; end
+
+    sig { returns(T.untyped) }
+    def self.failure; end
+
+    sig { params(hash: T.untyped).returns(T.untyped) }
+    def self.call(hash = {}); end
+
+    sig { params(name: T.untyped, step: T.untyped).returns(T.untyped) }
+    def self.query(name, &step); end
+
+    sig { params(step: T.untyped).returns(T.untyped) }
+    def self.result(&step); end
+
+    sig { returns(T.untyped) }
+    def perform; end
+
+    class Query < Value
+      sig { params(instance: Object).returns(T.untyped) }
+      def call(instance = Object); end
+    end
+
+    class Step < Value
+      sig { params(instance: Object).returns(Result) }
+      def call(instance = nil); end
+
+      sig { params(error: T.untyped).returns(Result) }
+      def fail!(error); end
+    end
   end
 end
