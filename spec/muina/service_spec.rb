@@ -29,6 +29,12 @@ RSpec.describe Muina::Service do
     end
   end
 
+  def is_callable(service, params, expected)
+    expect(service.(params)).to eq(expected)
+    expect(service.call(params)).to eq(expected)
+    expect(service[params]).to eq(expected)
+  end
+
   describe '.allocate' do
     it 'is private' do
       expect { adder.allocate }.to raise_error(NoMethodError)
@@ -47,9 +53,7 @@ RSpec.describe Muina::Service do
     end
 
     it 'can be called with required arguments', aggregate_failures: true do
-      expect(adder.(a: 1, b: 2)).to eq(3)
-      expect(adder.call(a: 1, b: 2)).to eq(3)
-      expect(adder[a: 1, b: 2]).to eq(3)
+      is_callable(adder, { a: 1, b: 2 }, 3)
     end
 
     context 'when #perform is not implemented' do
@@ -62,9 +66,7 @@ RSpec.describe Muina::Service do
 
   describe '.arguments' do
     it 'can declare optional arguments', aggregate_failures: true do
-      expect(optional.(a: 1, b: 2)).to eq(5)
-      expect(optional.call(a: 1, b: 2)).to eq(5)
-      expect(optional[a: 1, b: 2]).to eq(5)
+      is_callable(optional, { a: 1, b: 2 }, 5)
     end
   end
 end
