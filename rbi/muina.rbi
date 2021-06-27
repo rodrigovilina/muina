@@ -42,6 +42,12 @@ module Muina
 
     sig { params(error: T.untyped).returns(T.untyped) }
     def self.failure(error); end
+
+    sig { params(block: T.untyped).returns(T.untyped) }
+    def and_then(&block); end
+
+    sig { params(block: T.untyped).returns(T.untyped) }
+    def or_else(&block); end
   end
 
   class Service

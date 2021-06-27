@@ -48,4 +48,48 @@ RSpec.describe Muina::Result do
       expect { success.error }.to raise_error(Muina::Error)
     end
   end
+
+  describe '#and_then' do
+    it do
+      a_value = 1
+      invitation = instance_spy(IO, 'invitation')
+      described_class.success(a_value).and_then { |value| invitation.puts(value) }
+      expect(invitation).to have_received(:puts).with(a_value)
+    end
+
+    it do
+      a_value = 1
+      invitation = instance_spy(IO, 'invitation')
+      described_class.failure(a_value).and_then { |value| invitation.puts(value) }.or_else
+      expect(invitation).not_to have_received(:puts)
+    end
+
+    it do
+      a_value = 1
+      instance = described_class.success(a_value)
+      expect(instance.and_then).to be(instance)
+    end
+  end
+
+  describe '#or_else' do
+    it do
+      a_value = 1
+      invitation = instance_spy(IO, 'invitation')
+      described_class.failure(a_value).and_then.or_else { |value| invitation.puts(value) }
+      expect(invitation).to have_received(:puts).with(a_value)
+    end
+
+    it do
+      a_value = 1
+      invitation = instance_spy(IO, 'invitation')
+      described_class.success(a_value).and_then { |_value| nil }.or_else { |value| invitation.puts(value) }
+      expect(invitation).not_to have_received(:puts)
+    end
+
+    it do
+      a_value = 1
+      instance = described_class.failure(a_value)
+      expect(instance.or_else).to be(instance)
+    end
+  end
 end
