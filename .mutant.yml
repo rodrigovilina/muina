@@ -9,6 +9,7 @@ requires:
 
 matcher:
   subjects:
+    - Muina::Action::Step*
     - Muina::Classes*
     - Muina::Params*
     - Muina::PrivateCreation*
