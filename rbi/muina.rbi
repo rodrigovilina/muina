@@ -7,8 +7,10 @@ end
 
 module Muina
   Classes = T.type_alias { T.any(Class, T::Array[Class]) }
+  Parameters = T.type_alias { T.any(UntypedHash, ActionController::Parameters) }
   SymbolHash = T.type_alias { T::Hash[Symbol, T.untyped] }
   UntypedArray = T.type_alias { T::Array[T.untyped] }
+  UntypedHash = T.type_alias { T::Hash[T.untyped, T.untyped] }
   UNIT = T.let(Unit.instance, Unit)
   VERSION = '0.2.0'
 
@@ -22,12 +24,12 @@ module Muina
     include T::Props
     include T::Props::Constructor
 
-    sig { params(params: T.untyped).returns(T.untyped) }
+    sig { params(params: Parameters).returns(T.attached_class) }
     def self.extract(params); end
   end
 
   module PrivateCreation
-    sig { params(klass: T.untyped).returns(T.untyped) }
+    sig { params(klass: Class).void }
     def self.included(klass); end
   end
 
@@ -108,7 +110,7 @@ module Muina
     include T::Props
     include T::Props::Constructor
 
-    sig { returns(T.untyped) }
+    sig { returns(T::Array[T.any(Query, Step)]) }
     def self.steps; end
 
     sig { returns(T.untyped) }
@@ -117,19 +119,19 @@ module Muina
     sig { returns(T.untyped) }
     def self.failure; end
 
-    sig { returns(T.untyped) }
+    sig { returns(T::Boolean) }
     def self.result_set; end
 
-    sig { params(hash: T.untyped).returns(T.untyped) }
+    sig { params(hash: SymbolHash).returns(T.untyped) }
     def self.call(hash = {}); end
 
-    sig { params(name: T.untyped, step: T.untyped).returns(T.untyped) }
+    sig { params(name: Symbol, step: T.untyped).void }
     def self.query(name, &step); end
 
-    sig { params(step: T.untyped).returns(T.untyped) }
+    sig { params(step: T.untyped).void }
     def self.result(&step); end
 
-    sig { returns(T.untyped) }
+    sig { returns(Result) }
     def perform; end
 
     class Query < Value

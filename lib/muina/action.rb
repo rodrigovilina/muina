@@ -7,6 +7,7 @@ module Muina
     include T::Props
     include T::Props::Constructor
 
+    T::Sig::WithoutRuntime.sig { returns(T::Array[T.any(Query, Step)]) }
     def self.steps
       @steps ||= []
     end
@@ -19,19 +20,23 @@ module Muina
       @failure ||= T.untyped
     end
 
+    T::Sig::WithoutRuntime.sig { returns(T::Boolean) }
     def self.result_set
       @result_set ||= false
     end
 
+    T::Sig::WithoutRuntime.sig { params(hash: SymbolHash).returns(T.untyped) }
     def self.call(hash = {})
       extract(hash).perform
     end
 
+    T::Sig::WithoutRuntime.sig { params(name: Symbol, step: T.untyped).void }
     def self.query(name, &step)
       const name, T.untyped
       steps << Query.new(name: name, step: step)
     end
 
+    T::Sig::WithoutRuntime.sig { params(step: T.untyped).void }
     def self.result(&step)
       raise Error if result_set
 
@@ -39,6 +44,7 @@ module Muina
       @result_set = true
     end
 
+    T::Sig::WithoutRuntime.sig { returns(Result) }
     def perform
       self.class.steps.map { |step| step.call(self) }.last || Result.success(UNIT)
     end
