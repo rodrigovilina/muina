@@ -13,10 +13,14 @@ matcher:
     - Muina::Action::Query*
     - Muina::Action::Step*
     - Muina::Classes*
+    - Muina::Error*
+    - Muina::TestError*
     - Muina::Params*
     - Muina::PrivateCreation*
     - Muina::Result*
     - Muina::Service*
+    - Muina::Unit*
+    - Muina::UNIT*
     - Muina::Utils*
     - Muina::Value*
-    - Muina::Version*
+    - Muina::VERSION*
