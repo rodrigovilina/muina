@@ -7,6 +7,8 @@ end
 
 module Muina
   Classes = T.type_alias { T.any(Class, T::Array[Class]) }
+  SymbolHash = T.type_alias { T::Hash[Symbol, T.untyped] }
+  UntypedArray = T.type_alias { T::Array[T.untyped] }
   UNIT = T.let(Unit.instance, Unit)
   VERSION = '0.2.0'
 
@@ -29,6 +31,31 @@ module Muina
     def self.included(klass); end
   end
 
+  class Result < Value
+    include PrivateCreation
+
+    sig { params(success_klass: T.untyped, error_klass: T.untyped).returns(T.untyped) }
+    def self.[](success_klass, error_klass); end
+
+    sig { params(value: T.untyped).returns(T.untyped) }
+    def self.success(value); end
+
+    sig { params(error: T.untyped).returns(T.untyped) }
+    def self.failure(error); end
+
+    sig { returns(T.untyped) }
+    def value!; end
+
+    sig { returns(T.untyped) }
+    def error!; end
+
+    sig { params(block: T.untyped).returns(T.untyped) }
+    def and_then(&block); end
+
+    sig { params(block: T.untyped).returns(T.untyped) }
+    def or_else(&block); end
+  end
+
   class Service
     abstract!
 
@@ -37,7 +64,7 @@ module Muina
     include PrivateCreation
     extend T::Helpers
 
-    sig { params(hash: T.untyped).returns(T.untyped) }
+    sig { params(hash: SymbolHash).returns(T.untyped) }
     def self.call(hash = {}); end
 
     sig { params(args: Symbol, opts: T.untyped).void }
@@ -52,17 +79,20 @@ module Muina
   end
 
   module Utils
-    sig { params(errors: T.untyped).returns(T::Array[T.untyped]) }
+    sig { params(errors: T.untyped).returns(T.untyped) }
     def self.cast_to_errors(*errors); end
 
-    sig { params(type: BasicObject).returns(T.untyped) }
+    sig { params(type: T.untyped).returns(T.untyped) }
     def self.cast_to_error(type); end
 
-    sig { params(error: T::Types::Union).returns(T::Array[T.untyped]) }
+    sig { params(error: T.untyped).returns(T.untyped) }
     def self.cast_union_to_errors(error); end
 
-    sig { params(failure_klass: Classes).returns(Module) }
+    sig { params(failure_klass: T.untyped).returns(T.untyped) }
     def self.errors_rescue_module(failure_klass); end
+
+    sig { params(error: T.untyped).returns(T.untyped) }
+    def self.flatten_union(error); end
   end
 
   class Value
@@ -70,7 +100,7 @@ module Muina
     include T::Props::Constructor
     include T::Struct::ActsAsComparable
 
-    sig { params(hash: T::Hash[Symbol, T.untyped]).void }
+    sig { params(hash: SymbolHash).void }
     def initialize(hash = {}); end
   end
 
@@ -114,33 +144,5 @@ module Muina
       sig { params(error: T.untyped).returns(Result) }
       def fail!(error); end
     end
-  end
-
-  class Result < Value
-    include PrivateCreation
-
-    sig { params(success_klass: T.untyped, error_klass: T.untyped).returns(T.untyped) }
-    def self.[](success_klass, error_klass); end
-
-    sig { params(value: T.untyped).returns(T.untyped) }
-    def self.success(value); end
-
-    sig { params(error: T.untyped).returns(T.untyped) }
-    def self.failure(error); end
-
-    sig { returns(T.untyped) }
-    def value!; end
-
-    sig { returns(T.untyped) }
-    def error!; end
-
-    sig { params(block: T.untyped).returns(T.untyped) }
-    def and_then(&block); end
-
-    sig { params(block: T.untyped).returns(T.untyped) }
-    def or_else(&block); end
-
-    sig { params(hash: T.untyped).returns(T.untyped) }
-    def initialize(hash = {}); end
   end
 end
