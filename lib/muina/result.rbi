@@ -2,9 +2,6 @@
 # frozen_string_literal: true
 
 module Muina
-  Unit = Class.new do
-    include Singleton
-  end
   # Result Monad
   class Result < Value
     def initialize(hash = {})
