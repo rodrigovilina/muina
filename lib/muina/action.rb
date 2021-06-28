@@ -12,11 +12,11 @@ module Muina
     end
 
     def self.success
-      @success ||= T.let(T.untyped, Object)
+      @success ||= T.untyped
     end
 
     def self.failure
-      @failure ||= T.let(T.untyped, Object)
+      @failure ||= T.untyped
     end
 
     def self.call(hash = {})
