@@ -36,12 +36,12 @@ module Muina
     end
 
     def and_then(&block)
-      block[value] if block && error.equal?(Unit.instance)
+      block[value] if block && @error.equal?(Unit.instance)
       self
     end
 
     def or_else(&block)
-      block[error] if block && !error.equal?(Unit.instance)
+      block[error] if block && @value.equal?(Unit.instance)
       self
     end
   end
