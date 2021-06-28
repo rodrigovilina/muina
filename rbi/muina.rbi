@@ -7,10 +7,8 @@ end
 
 module Muina
   Classes = T.type_alias { T.any(Class, T::Array[Class]) }
-  Unit = Class.new do
-    include Singleton
-  end
-  VERSION = '0.1.1'
+  UNIT = T.let(Unit.instance, Unit)
+  VERSION = '0.2.0'
 
   class Error < StandardError
   end
@@ -31,25 +29,6 @@ module Muina
     def self.included(klass); end
   end
 
-  class Result < Value
-    include PrivateCreation
-
-    sig { params(success_klass: T.untyped, error_klass: T.untyped).returns(T.untyped) }
-    def self.[](success_klass, error_klass); end
-
-    sig { params(value: T.untyped).returns(T.untyped) }
-    def self.success(value); end
-
-    sig { params(error: T.untyped).returns(T.untyped) }
-    def self.failure(error); end
-
-    sig { params(block: T.untyped).returns(T.untyped) }
-    def and_then(&block); end
-
-    sig { params(block: T.untyped).returns(T.untyped) }
-    def or_else(&block); end
-  end
-
   class Service
     abstract!
 
@@ -66,6 +45,10 @@ module Muina
 
     sig { abstract.returns(T.untyped) }
     def perform; end
+  end
+
+  class Unit
+    include Singleton
   end
 
   module Utils
@@ -91,7 +74,7 @@ module Muina
     def initialize(hash = {}); end
   end
 
-  class Action
+  class Action < Params
     include T::Props
     include T::Props::Constructor
 
@@ -103,6 +86,9 @@ module Muina
 
     sig { returns(T.untyped) }
     def self.failure; end
+
+    sig { returns(T.untyped) }
+    def self.result_set; end
 
     sig { params(hash: T.untyped).returns(T.untyped) }
     def self.call(hash = {}); end
@@ -128,5 +114,33 @@ module Muina
       sig { params(error: T.untyped).returns(Result) }
       def fail!(error); end
     end
+  end
+
+  class Result < Value
+    include PrivateCreation
+
+    sig { params(success_klass: T.untyped, error_klass: T.untyped).returns(T.untyped) }
+    def self.[](success_klass, error_klass); end
+
+    sig { params(value: T.untyped).returns(T.untyped) }
+    def self.success(value); end
+
+    sig { params(error: T.untyped).returns(T.untyped) }
+    def self.failure(error); end
+
+    sig { returns(T.untyped) }
+    def value!; end
+
+    sig { returns(T.untyped) }
+    def error!; end
+
+    sig { params(block: T.untyped).returns(T.untyped) }
+    def and_then(&block); end
+
+    sig { params(block: T.untyped).returns(T.untyped) }
+    def or_else(&block); end
+
+    sig { params(hash: T.untyped).returns(T.untyped) }
+    def initialize(hash = {}); end
   end
 end
