@@ -18,11 +18,11 @@ RSpec.describe Muina::Action do
     end
 
     it 'one', aggregate_failures: true do
-      expect(one.call.value).to be(1)
+      expect(one.call.value!).to be(1)
     end
 
     it 'two', aggregate_failures: true do
-      expect(two.call.value).to be(2)
+      expect(two.call.value!).to be(2)
     end
   end
 end

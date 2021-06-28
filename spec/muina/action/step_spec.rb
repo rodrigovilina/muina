@@ -14,7 +14,7 @@ RSpec.describe Muina::Action::Step do
       expect(
         described_class.new(
           step: proc {}, success: Integer, failure: StandardError
-        ).fail!(StandardError.new).error
+        ).fail!(StandardError.new).error!
       ).to be_a(StandardError)
     end
   end
@@ -30,7 +30,7 @@ RSpec.describe Muina::Action::Step do
 
     it '1', aggregate_failures: true do
       expect(
-        described_class.new(step: proc { to_s.to_i + 1 }, success: Integer, failure: Integer).call(1).value
+        described_class.new(step: proc { to_s.to_i + 1 }, success: Integer, failure: Integer).call(1).value!
       ).to be(2)
     end
 
@@ -44,7 +44,7 @@ RSpec.describe Muina::Action::Step do
       step = described_class.new(step: proc { raise StandardError }, success: Integer, failure: T.untyped)
       result = step.call
       expect(result).to be_a(Muina::Result)
-      expect(result.error).to be_a(StandardError)
+      expect(result.error!).to be_a(StandardError)
     end
 
     it 'raises errors that do not match', aggregate_failures: true do
