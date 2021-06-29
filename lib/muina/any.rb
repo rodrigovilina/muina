@@ -2,5 +2,6 @@
 # frozen_string_literal: true
 
 module Muina
-  Untyped = T.type_alias { T.untyped }
+  Any = T.type_alias { T.untyped }
+  public_constant :Any
 end
