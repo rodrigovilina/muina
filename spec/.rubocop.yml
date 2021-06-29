@@ -4,3 +4,6 @@ inherit_from:
 
 Metrics/BlockLength:
   Max: 100
+
+Style/MethodCalledOnDoEndBlock:
+  Enabled: false
