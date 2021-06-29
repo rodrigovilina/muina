@@ -1,4 +1,9 @@
 ---
+inherit_mode:
+  merge:
+    - Exclude
+    - IgnoredMethods
+
 require:
   - rubocop-performance
   - rubocop-rake
@@ -42,6 +47,9 @@ Lint/ConstantResolution:
 Metrics/MethodLength:
   Max: 5
 
+Metrics/ParameterLists:
+  Max: 4
+
 Performance/SelectMap:
   Enabled: true
 
@@ -78,7 +86,8 @@ Sorbet/ForbidTUnsafe:
   Enabled: true
 
 Sorbet/StrictSigil:
-  Enabled: false
+  Enabled: true
+  Exclude: [ 'spec/**/*' ]
 
 Style/Alias:
   EnforcedStyle: prefer_alias_method
