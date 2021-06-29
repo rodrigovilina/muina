@@ -28,7 +28,7 @@ module Muina
 
       Class.new { @failures = T.let(failures, T.untyped) }.tap do |klass|
         klass.define_singleton_method(:===) do |exception|
-          [*@failures].any? { |failure| exception.instance_of?(failure) }
+          @failures.any? { |failure| exception.instance_of?(failure) }
         end
       end
     end
