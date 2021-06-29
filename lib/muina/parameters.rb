@@ -3,4 +3,5 @@
 
 module Muina
   Parameters = T.type_alias { T.any(UntypedHash, ActionController::Parameters) }
+  public_constant :Parameters
 end

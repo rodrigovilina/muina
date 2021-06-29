@@ -3,4 +3,5 @@
 
 module Muina
   SymbolHash = T.type_alias { T::Hash[Symbol, T.untyped] }
+  public_constant :SymbolHash
 end

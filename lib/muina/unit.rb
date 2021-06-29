@@ -6,4 +6,5 @@ module Muina
     include Singleton
   end
   UNIT = T.let(Unit.instance, Unit)
+  public_constant :UNIT
 end
