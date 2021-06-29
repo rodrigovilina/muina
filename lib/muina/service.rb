@@ -11,7 +11,7 @@ module Muina
 
     abstract!
 
-    T::Sig::WithoutRuntime.sig { params(hash: T.untyped).returns(T.untyped) }
+    T::Sig::WithoutRuntime.sig { params(hash: SymbolHash).returns(T.untyped) }
     def self.call(hash = {})
       new(hash).__send__(:perform)
     end

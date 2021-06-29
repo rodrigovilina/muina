@@ -9,10 +9,23 @@ requires:
 
 matcher:
   subjects:
+    - Muina::Action*
+    - Muina::Action::Query*
+    - Muina::Action::Step*
+    - Muina::Any*
     - Muina::Classes*
+    - Muina::Error*
+    - Muina::TestError*
+    - Muina::Parameters*
     - Muina::Params*
     - Muina::PrivateCreation*
     - Muina::Result*
     - Muina::Service*
+    - Muina::SymbolHash*
+    - Muina::Unit*
+    - Muina::UNIT*
+    - Muina::UntypedArray*
+    - Muina::UntypedHash*
+    - Muina::Utils*
     - Muina::Value*
-    - Muina::Version*
+    - Muina::VERSION*

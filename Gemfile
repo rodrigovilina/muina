@@ -7,6 +7,12 @@ gemspec
 
 gem 'awesome_print'
 gem 'byebug'
+gem 'flay'
+gem 'flog'
+gem 'guard'
+gem 'guard-rspec'
+gem 'guard-rubocop'
+gem 'guard-shell'
 gem 'irb'
 gem 'lefthook'
 gem 'mutant'

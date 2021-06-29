@@ -29,6 +29,10 @@ RSpec.describe Muina::Value do
     end
   end
 
+  def test_unequality(klass, method)
+    expect(klass.new(x: 1, y: 1).__send__(method, klass.new(x: 1, y: 1))).to be(false)
+  end
+
   describe '#==' do
     it 'is true if all members are equal' do
       expect(point_klass.new(x: 1, y: 1)).to eq(point_klass.new(x: 1, y: 1)) # rubocop:disable RSpec/IdenticalEqualityAssertion
@@ -37,13 +41,13 @@ RSpec.describe Muina::Value do
 
   describe '#eql?' do
     it 'is false' do
-      expect(point_klass.new(x: 1, y: 1).eql?(point_klass.new(x: 1, y: 1))).to eq(false)
+      test_unequality(point_klass, :eql?)
     end
   end
 
   describe '#equal?' do
     it 'is false' do
-      expect(point_klass.new(x: 1, y: 1).equal?(point_klass.new(x: 1, y: 1))).to eq(false)
+      test_unequality(point_klass, :equal?)
     end
   end
 end

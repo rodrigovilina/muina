@@ -141,7 +141,7 @@ ActiveSupport::Cache::Entry::DEFAULT_COMPRESS_LIMIT = T.let(T.unsafe(nil), Integ
 class ActiveSupport::Cache::FileStore < ::ActiveSupport::Cache::Store
   include ::ActiveSupport::Cache::Strategy::LocalCache
 
-  def initialize(cache_path, options = T.unsafe(nil)); end
+  def initialize(cache_path, **options); end
 
   def cache_path; end
 
@@ -1179,6 +1179,31 @@ class ActiveSupport::EnvironmentInquirer < ::ActiveSupport::StringInquirer
 end
 
 ActiveSupport::EnvironmentInquirer::DEFAULT_ENVIRONMENTS = T.let(T.unsafe(nil), Array)
+
+class ActiveSupport::EventedFileUpdateChecker
+  def initialize(files, dirs = T.unsafe(nil), &block); end
+
+  def execute; end
+  def execute_if_updated; end
+  def updated?; end
+end
+
+class ActiveSupport::EventedFileUpdateChecker::Core
+  def initialize(files, dirs); end
+
+  def changed(modified, added, removed); end
+  def common_path(paths); end
+  def directories_to_watch; end
+  def finalizer; end
+  def normalize_dirs!; end
+  def restart; end
+  def restart?; end
+  def start; end
+  def stop; end
+  def thread_safely; end
+  def updated; end
+  def watching?(file); end
+end
 
 class ActiveSupport::ExecutionWrapper
   include ::ActiveSupport::Callbacks
@@ -2380,15 +2405,14 @@ class ActiveSupport::SubscriberQueueRegistry
 end
 
 module ActiveSupport::TaggedLogging
+  include ::Lumberjack::TaggedLogging
+  extend ::Lumberjack::TaggedLogging::ClassMethods
+
   def clear_tags!(*args, &block); end
   def flush; end
   def pop_tags(*args, &block); end
   def push_tags(*args, &block); end
   def tagged(*tags); end
-
-  class << self
-    def new(logger); end
-  end
 end
 
 module ActiveSupport::TaggedLogging::Formatter
@@ -2815,7 +2839,6 @@ end
 module ActiveSupport::VERSION; end
 ActiveSupport::VERSION::MAJOR = T.let(T.unsafe(nil), Integer)
 ActiveSupport::VERSION::MINOR = T.let(T.unsafe(nil), Integer)
-ActiveSupport::VERSION::PRE = T.let(T.unsafe(nil), String)
 ActiveSupport::VERSION::STRING = T.let(T.unsafe(nil), String)
 ActiveSupport::VERSION::TINY = T.let(T.unsafe(nil), Integer)
 
@@ -3505,6 +3528,11 @@ class Regexp
   def multiline?; end
 end
 
+Regexp::ENC_EUC = T.let(T.unsafe(nil), Integer)
+Regexp::ENC_NONE = T.let(T.unsafe(nil), Integer)
+Regexp::ENC_SJIS = T.let(T.unsafe(nil), Integer)
+Regexp::ENC_UTF8 = T.let(T.unsafe(nil), Integer)
+Regexp::ONCE = T.let(T.unsafe(nil), Integer)
 Regexp::TOKEN_KEYS = T.let(T.unsafe(nil), Array)
 
 class Regexp::Token < ::Struct
@@ -3677,8 +3705,8 @@ class Time
 
   class << self
     def ===(other); end
-    def at(*args, **kwargs); end
-    def at_with_coercion(*args, **kwargs); end
+    def at(*args); end
+    def at_with_coercion(*args); end
     def current; end
     def days_in_month(month, year = T.unsafe(nil)); end
     def days_in_year(year = T.unsafe(nil)); end

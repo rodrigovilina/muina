@@ -2,11 +2,8 @@
 inherit_from:
   - ../.rubocop.yml
 
-require:
-  - rubocop-performance
-  - rubocop-rake
-  - rubocop-rspec
-  - rubocop-sorbet
-
 Metrics/BlockLength:
   Max: 100
+
+Style/MethodCalledOnDoEndBlock:
+  Enabled: false

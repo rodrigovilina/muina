@@ -1,20 +1,172 @@
 ---
+inherit_mode:
+  merge:
+    - Exclude
+    - IgnoredMethods
+
+require:
+  - rubocop-performance
+  - rubocop-rake
+  - rubocop-rspec
+  - rubocop-sorbet
+
 AllCops:
   NewCops: enable
+  Exclude:
+    - bin/*
+    - vendor/**/*
+
+Bundler/GemComment:
+  Enabled: false
+
+Bundler/GemVersion:
+  Enabled: true
+  EnforcedStyle: forbidden
+
+Layout/ClassStructure:
+  Enabled: true
+  Categories:
+    module_inclusion:
+      - include
+      - prepend
+      - extend
+  ExpectedOrder:
+    - module_inclusion
+    - constants
+    - public_class_methods
+    - initializer
+    - public_methods
+    - protected_methods
+    - private_methods
+
+Lint/ConstantResolution:
+  Enabled: false
+  Only: []
+  Ignore: []
 
 Metrics/MethodLength:
   Max: 5
 
-Style/Alias:
-  Description: Use alias instead of alias_method.
-  EnforcedStyle: prefer_alias_method
+Metrics/ParameterLists:
+  Max: 4
+
+Performance/SelectMap:
+  Enabled: true
+
+RSpec/AlignLeftLetBrace:
+  Enabled: true
+
+RSpec/AlignRightLetBrace:
+  Enabled: true
+
+RSpec/DescribedClassModuleWrapping:
+  Enabled: true
+
+RSpec/MessageExpectation:
+  Description: Checks for consistent message expectation style.
+  Enabled: false
+  EnforcedStyle: allow
   SupportedStyles:
-    - prefer_alias
-    - prefer_alias_method
+    - allow
+    - expect
+
+RSpec/Pending:
+  Enabled: true
+
+Sorbet/EnforceSignatures:
+  Enabled: false
+
+Sorbet/ForbidIncludeConstLiteral:
+  Enabled: true
+
+Sorbet/ForbidSuperclassConstLiteral:
+  Enabled: true
+
+Sorbet/ForbidTUnsafe:
+  Enabled: true
+
+Sorbet/StrictSigil:
+  Enabled: true
+  Exclude: [ 'spec/**/*' ]
+
+Style/Alias:
+  EnforcedStyle: prefer_alias_method
+
+Style/ArrayCoercion:
+  Safe: false
+  Enabled: true
+
+Style/AutoResourceCleanup:
+  Enabled: true
+
+Style/ClassMethodsDefinitions:
+  Enabled: true
+  EnforcedStyle: def_self
+
+Style/CollectionMethods:
+  Enabled: true
+
+Style/ConstantVisibility:
+  Enabled: true
+
+Style/DisableCopsWithinSourceCodeDirective:
+  Description: Forbids disabling/enabling cops within source code.
+  Enabled: false
+  AllowedCops: []
+
+Style/DocumentationMethod:
+  Enabled: false
+  RequireForNonPublicMethods: true
 
 Style/EmptyCaseCondition:
   Enabled: false
 
+Style/ImplicitRuntimeError:
+  Enabled: true
+
+Style/InlineComment:
+  Enabled: false
+
 Style/LambdaCall:
-  Description: Use lambda.call(...) instead of lambda.(...).
+  Enabled: false
+
+Style/MethodCallWithArgsParentheses:
+  Enabled: false
+
+Style/MethodCalledOnDoEndBlock:
+  Enabled: true
+
+Style/MissingElse:
+  Enabled: true
+  EnforcedStyle: both
+
+Style/MultilineMethodSignature:
+  Enabled: true
+
+Style/OptionHash:
+  Enabled: true
+
+# Supports --auto-correct
+Style/ReturnNil:
+  Enabled: true
+
+Style/Send:
+  Enabled: true
+
+Style/SingleLineBlockParams:
+  Enabled: true
+
+Style/StaticClass:
+  Enabled: true
+
+Style/StringHashKeys:
+  Enabled: true
+
+Style/TopLevelMethodDefinition:
+  Enabled: true
+
+Style/TrailingCommaInBlockArgs:
+  Enabled: false
+
+Style/UnlessLogicalOperators:
   Enabled: false
