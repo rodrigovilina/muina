@@ -9,6 +9,7 @@ AllCops:
   NewCops: enable
   Exclude:
     - bin/*
+    - vendor/**/*
 
 Bundler/GemComment:
   Enabled: false
