@@ -1,5 +1,4 @@
 # typed: strict
-# typd: strict
 # frozen_string_literal: true
 
 require_relative 'lib/muina/version'
