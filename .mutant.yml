@@ -12,6 +12,7 @@ matcher:
     - Muina::Action*
     - Muina::Action::Query*
     - Muina::Action::Step*
+    - Muina::Any*
     - Muina::Classes*
     - Muina::Error*
     - Muina::TestError*
@@ -23,7 +24,6 @@ matcher:
     - Muina::SymbolHash*
     - Muina::Unit*
     - Muina::UNIT*
-    - Muina::Untyped*
     - Muina::UntypedArray*
     - Muina::UntypedHash*
     - Muina::Utils*
