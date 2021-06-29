@@ -30,7 +30,7 @@ RSpec.describe Muina::Value do
   end
 
   def test_unequality(klass, method)
-    expect(klass.new(x: 1, y: 1).send(method, klass.new(x: 1, y: 1))).to be(false)
+    expect(klass.new(x: 1, y: 1).__send__(method, klass.new(x: 1, y: 1))).to be(false)
   end
 
   describe '#==' do
