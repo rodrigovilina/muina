@@ -1,4 +1,4 @@
-# typed: false
+# typed: strict
 # frozen_string_literal: true
 
 # DO NOT EDIT MANUALLY
@@ -8,6 +8,9 @@
 require 'action_controller'
 require 'action_controller/metal/exceptions'
 require 'byebug'
+require 'muina/module'
+require 'simplecov'
 require 'sorbet-rails/typed_params'
 require 'sorbet-runtime'
 require 'sorbet-struct-comparable'
+require 'zeitwerk'

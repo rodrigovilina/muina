@@ -970,7 +970,13 @@ class ActionController::Live::Buffer < ::ActionDispatch::Response::Buffer
 
   private
 
+  def build_queue(queue_size); end
   def each_chunk(&block); end
+
+  class << self
+    def queue_size; end
+    def queue_size=(_arg0); end
+  end
 end
 
 module ActionController::Live::ClassMethods
@@ -4841,7 +4847,6 @@ end
 module ActionPack::VERSION; end
 ActionPack::VERSION::MAJOR = T.let(T.unsafe(nil), Integer)
 ActionPack::VERSION::MINOR = T.let(T.unsafe(nil), Integer)
-ActionPack::VERSION::PRE = T.let(T.unsafe(nil), String)
 ActionPack::VERSION::STRING = T.let(T.unsafe(nil), String)
 ActionPack::VERSION::TINY = T.let(T.unsafe(nil), Integer)
 

@@ -8,18 +8,19 @@ module RuboCop; end
 module RuboCop::Cop; end
 module RuboCop::Cop::Rake; end
 
-class RuboCop::Cop::Rake::ClassDefinitionInTask < ::RuboCop::Cop::Cop
-  def message(node); end
+class RuboCop::Cop::Rake::ClassDefinitionInTask < ::RuboCop::Cop::Base
   def on_class(node); end
   def on_module(node); end
 end
 
 RuboCop::Cop::Rake::ClassDefinitionInTask::MSG = T.let(T.unsafe(nil), String)
 
-class RuboCop::Cop::Rake::Desc < ::RuboCop::Cop::Cop
+class RuboCop::Cop::Rake::Desc < ::RuboCop::Cop::Base
   include ::RuboCop::Cop::Rake::Helper::OnTask
+  extend ::RuboCop::Cop::AutoCorrector
 
   def on_task(node); end
+  def prerequisites(param0 = T.unsafe(nil)); end
 
   private
 
@@ -30,7 +31,7 @@ end
 
 RuboCop::Cop::Rake::Desc::MSG = T.let(T.unsafe(nil), String)
 
-class RuboCop::Cop::Rake::DuplicateNamespace < ::RuboCop::Cop::Cop
+class RuboCop::Cop::Rake::DuplicateNamespace < ::RuboCop::Cop::Base
   include ::RuboCop::Cop::Rake::Helper::OnNamespace
 
   def initialize(*_arg0); end
@@ -43,7 +44,7 @@ end
 
 RuboCop::Cop::Rake::DuplicateNamespace::MSG = T.let(T.unsafe(nil), String)
 
-class RuboCop::Cop::Rake::DuplicateTask < ::RuboCop::Cop::Cop
+class RuboCop::Cop::Rake::DuplicateTask < ::RuboCop::Cop::Base
   include ::RuboCop::Cop::Rake::Helper::OnTask
 
   def initialize(*_arg0); end
@@ -93,7 +94,7 @@ module RuboCop::Cop::Rake::Helper::TaskName
   def task_name(node); end
 end
 
-class RuboCop::Cop::Rake::MethodDefinitionInTask < ::RuboCop::Cop::Cop
+class RuboCop::Cop::Rake::MethodDefinitionInTask < ::RuboCop::Cop::Base
   def on_def(node); end
   def on_defs(node); end
 end
