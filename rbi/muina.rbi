@@ -6,6 +6,7 @@ class Module
 end
 
 module Muina
+  Any = T.type_alias { T.untyped }
   Classes = T.type_alias { T.any(Class, T::Array[Class]) }
   Parameters = T.type_alias { T.any(UntypedHash, ActionController::Parameters) }
   SymbolHash = T.type_alias { T::Hash[Symbol, T.untyped] }
