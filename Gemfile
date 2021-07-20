@@ -7,6 +7,7 @@ gemspec
 
 gem 'awesome_print'
 gem 'byebug'
+gem 'faker'
 gem 'flay'
 gem 'flog'
 gem 'guard'

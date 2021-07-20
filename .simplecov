@@ -6,7 +6,9 @@ SimpleCov.start do
   primary_coverage :branch
 
   minimum_coverage         line: 100, branch: 100
-  minimum_coverage_by_file line: 90,  branch: 80
+  minimum_coverage_by_file line: 100, branch: 100
 
   refuse_coverage_drop :line, :branch
+
+  add_filter '/spec/'
 end
