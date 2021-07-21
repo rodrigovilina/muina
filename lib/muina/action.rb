@@ -46,7 +46,7 @@ module Muina
 
     T::Sig::WithoutRuntime.sig { returns(Result) }
     def perform
-      self.class.steps.map { |step| step.call(self) }.last || Result.success(UNIT)
+      self.class.steps.map { |step| step.call(self) }.last || Result::Null()
     end
   end
 end

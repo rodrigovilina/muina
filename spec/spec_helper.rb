@@ -1,7 +1,7 @@
 # typed: strict
 # frozen_string_literal: true
 
-require 'simplecov'
+require 'simplecov' unless $PROGRAM_NAME == 'bin/mutant'
 require 'muina'
 require 'byebug'
 
@@ -16,3 +16,5 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 end
+
+Dir['./spec/support/**/*.rb'].sort.each { |f| require f }

@@ -18,10 +18,25 @@ module_ext = "#{__dir__}/muina/module.rb"
 loader.ignore(module_ext)
 loader.setup
 
+# Top level module
 module Muina
   class Error < StandardError; end
 
   class TestError < StandardError; end
+
+  def self.Success(value) # rubocop:disable Naming/MethodName
+    Result::Success.__send__(:new, value: value)
+  end
+
+  def self.Failure(error) # rubocop:disable Naming/MethodName
+    Result::Failure.__send__(:new, error: error)
+  end
+
+  def self.Result(&blk) # rubocop:disable Naming/MethodName
+    Success(blk[])
+  rescue StandardError => e
+    Failure(e)
+  end
 end
 M = Muina
 
