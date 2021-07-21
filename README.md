@@ -1,5 +1,7 @@
 # Muina
 
+[![Gem Version](https://badge.fury.io/rb/muina.svg)](https://badge.fury.io/rb/muina)
+
 Typesafe base objects to make your code safer and cleaner.
 
 ## Installation

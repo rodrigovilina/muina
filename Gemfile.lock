@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    muina (0.2.4)
+    muina (0.3.0)
       actionpack
       sorbet-rails
       sorbet-runtime
