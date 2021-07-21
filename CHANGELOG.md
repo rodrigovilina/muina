@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2021-06-29
+
+### Added
+
+* Muina::Action#parameters dsl, necessary for now to make extracion work
+
+### Changed
+
+* Muina::Action#{success,failure} now take a block to change its value
+
+### Fixed
+
+* Muina::Action#extract: type casting was not working, now it is
+
 ## [0.2.0] - 2021-06-28
 
 ### Added
