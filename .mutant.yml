@@ -10,8 +10,12 @@ requires:
 matcher:
   subjects:
     - Muina::Action*
-    - Muina::Action::Query*
+    - Muina::Action::ParamsFactory*
     - Muina::Action::Step*
+    - Muina::Action::Step::Command*
+    - Muina::Action::Step::Failure*
+    - Muina::Action::Step::Query*
+    - Muina::Action::Step::Result*
     - Muina::Any*
     - Muina::Classes*
     - Muina::Error*
@@ -20,6 +24,10 @@ matcher:
     - Muina::Params*
     - Muina::PrivateCreation*
     - Muina::Result*
+    - Muina::Result::Factory*
+    - Muina::Result::Failure*
+    - Muina::Result::Null*
+    - Muina::Result::Success*
     - Muina::Service*
     - Muina::SymbolHash*
     - Muina::Unit*

@@ -2,6 +2,6 @@
 # frozen_string_literal: true
 
 module Muina
-  VERSION = '0.2.5'
+  VERSION = '0.2.6'
   public_constant :VERSION
 end
