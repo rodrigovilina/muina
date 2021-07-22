@@ -8,7 +8,6 @@ module Muina
     include T::Props::Constructor
     include T::Struct::ActsAsComparable
 
-    T::Sig::WithoutRuntime.sig { params(hash: SymbolHash).void }
     def initialize(hash = {})
       super(hash)
       freeze

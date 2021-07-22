@@ -11,20 +11,18 @@ module Muina
 
     abstract!
 
+    sig { params(hash: SymbolHash).returns(T.untyped) }
     def self.call(hash = {})
-      new(hash).__send__(:perform)
     end
     class << self; alias_method :[], :call; end
 
+    sig { params(args: Symbol, opts: T.untyped).void }
     def self.arguments(*args, **opts)
-      args.each { |arg| const arg, T.untyped }
-      opts.each { |key, value| const key, T.untyped, default: value }
     end
 
     private
 
-    def perform
-      raise NotImplementedError
-    end
+    sig { abstract.returns(T.untyped) }
+    def perform; end
   end
 end
