@@ -1,7 +1,7 @@
 # typed: false
 # frozen_string_literal: true
 
-class ActionWithNoBody < M::Action
+class ActionWithNoBody < Muina::Action
 end
 
 RSpec.describe ActionWithNoBody do

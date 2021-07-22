@@ -13,7 +13,7 @@ RSpec.describe Muina::Action do
 
     it 'one', aggregate_failures: true do
       result = one.call(number: 1)
-      expect(result).to be_an(M::Result)
+      expect(result).to be_an(Muina::Result)
       expect(result.value!).to be(1)
       expect { result.error! }.to raise_error(Muina::Error)
     end

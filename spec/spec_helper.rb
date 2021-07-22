@@ -18,3 +18,17 @@ RSpec.configure do |config|
 end
 
 Dir['./spec/support/**/*.rb'].sort.each { |f| require f }
+
+require 'rspec/mocks'
+
+module RSpec
+  module Mocks
+    class InstanceVerifyingDouble
+      sig { params(expected: T.untyped).returns(T.untyped) }
+      def is_a?(expected)
+        @doubled_module = T.let(@doubled_module, T.untyped)
+        @doubled_module.target <= expected || super
+      end
+    end
+  end
+end
