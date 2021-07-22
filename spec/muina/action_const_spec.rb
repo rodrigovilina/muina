@@ -5,7 +5,7 @@ RSpec.describe Muina::Action do
   describe '.const' do
     let(:one) do
       Class.new(described_class) do
-        const :number, Integer
+        parameters { const :number, Integer }
 
         result { number }
       end

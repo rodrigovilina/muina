@@ -2,51 +2,65 @@
 # frozen_string_literal: true
 
 module Muina
-  # Feature implementation with typesafe params and wrapped up failures
-  class Action < Params
+  # Two tracked result based operation
+  class Action
     include T::Props
     include T::Props::Constructor
 
-    T::Sig::WithoutRuntime.sig { returns(T::Array[T.any(Query, Step)]) }
+    class DoubleResultError < Error
+    end
+
+    private_class_method :new
+
     def self.steps
       @steps ||= []
     end
 
-    def self.success
-      @success ||= T.untyped
+    def self.extract(params)
+      new(TypedParams[parameters].new.extract!(ParamsFactory.build(params)).serialize.symbolize_keys)
     end
+    private_class_method :extract
 
-    def self.failure
-      @failure ||= T.untyped
-    end
+    def self.result(&blk)
+      raise DoubleResultError if @result_set
 
-    T::Sig::WithoutRuntime.sig { returns(T::Boolean) }
-    def self.result_set
-      @result_set ||= false
-    end
+      steps << Step::Result.new(step: blk)
 
-    T::Sig::WithoutRuntime.sig { params(hash: SymbolHash).returns(T.untyped) }
-    def self.call(hash = {})
-      extract(hash).perform
-    end
-
-    T::Sig::WithoutRuntime.sig { params(name: Symbol, step: T.untyped).void }
-    def self.query(name, &step)
-      const name, T.untyped
-      steps << Query.new(name: name, step: step)
-    end
-
-    T::Sig::WithoutRuntime.sig { params(step: T.untyped).void }
-    def self.result(&step)
-      raise Error if result_set
-
-      steps << Step.new(step: step, success: success, failure: failure)
       @result_set = true
     end
+    private_class_method :result
 
-    T::Sig::WithoutRuntime.sig { returns(Result) }
+    def self.failure(&blk)
+      steps << Step::Failure.new(step: blk)
+    end
+    private_class_method :failure
+
+    def self.command(_name = nil, &blk)
+      steps << Step::Command.new(step: blk)
+    end
+    private_class_method :command
+
+    def self.query(name, &blk)
+      const name, T.untyped
+      steps << Step::Query.new(name: name, step: blk)
+    end
+    private_class_method :query
+
+    def self.parameters(&blk)
+      @parameters ||= Class.new(T::Struct)
+      parameters.instance_eval(&blk) if blk
+      instance_eval(&blk) if blk
+      @parameters
+    end
+
+    def self.call(hash = {})
+      extract(hash).__send__(:perform)
+    end
+
+    private
+
     def perform
-      self.class.steps.map { |step| step.call(self) }.last || Result::Null()
+      self.class.steps.map { |step| step.call(self) }.compact.last || Result::Null()
     end
   end
 end
