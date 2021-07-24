@@ -26,9 +26,6 @@ FileUtils::LN_SUPPORTED = T.let(T.unsafe(nil), Array)
 FileUtils::RUBY = T.let(T.unsafe(nil), String)
 
 class Module
-  include ::ActiveSupport::Dependencies::ModuleConstMissing
-  include ::Module::Concerning
-
   def rake_extension(method); end
 end
 
