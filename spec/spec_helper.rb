@@ -24,7 +24,7 @@ require 'rspec/mocks'
 module RSpec
   module Mocks
     class InstanceVerifyingDouble
-      # sig { params(expected: T.untyped).returns(T.untyped) }
+      sig { params(expected: Module).returns(T::Boolean) }
       def is_a?(expected)
         @doubled_module = T.let(@doubled_module, T.untyped)
         @doubled_module.target <= expected || super
