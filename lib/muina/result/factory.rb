@@ -27,9 +27,6 @@ module Muina
         klass_factory(Failure, :error, error_klass)
       end
 
-      sig do
-        params(klass: T.any(T.class_of(Success), T.class_of(Failure)), symbol: Symbol, sklass: T.untyped).returns(Class)
-      end
       def klass_factory(klass, symbol, sklass)
         iklass = T.unsafe(Class.new(klass)) # rubocop:disable Sorbet/ForbidTUnsafe
         iklass.const symbol, sklass, override: true

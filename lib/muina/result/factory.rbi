@@ -21,12 +21,11 @@ module Muina
 
       sig { returns(Class) }
       def failure_subclass; end
-
-      sig do
-        params(klass: T.any(T.class_of(Success), T.class_of(Failure)), symbol: Symbol, sklass: T.untyped).returns(Class)
-      end
-      def asdf(klass, symbol, sklass)
-      end
     end
+
+    sig do
+      params(klass: T.any(T.class_of(Success), T.class_of(Failure)), symbol: Symbol, sklass: T.untyped).returns(Class)
+    end
+    def klass_factory(klass, symbol, sklass); end
   end
 end
