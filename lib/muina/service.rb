@@ -4,12 +4,21 @@
 module Muina
   # Simple Service Object compatible with MiniService::Base
   class Service
-    extend T::Helpers
     include T::Props
     include T::Props::Constructor
     include PrivateCreation
 
-    abstract!
+    def self.inherited(subklass) # rubocop:disable Metrics/MethodLength
+      super
+      # :nocov:
+      TracePoint.trace(:end) do |t|
+        if subklass < self && !subklass.instance_methods(false).include?(:perform) # rubocop:disable Style/MissingElse
+          Logger.new($stdout).fatal "#{subklass}#perfrom is not implemented"
+        end
+        t.disable
+      end
+      # :nocov:
+    end
 
     def self.call(hash = {})
       new(hash).__send__(:perform)
@@ -21,10 +30,8 @@ module Muina
       opts.each { |key, value| const key, T.untyped, default: value }
     end
 
-    private
-
     def perform
-      raise NotImplementedError
+      raise NotImplementedError, "Please implement the #{self.class}#perform method"
     end
   end
 end

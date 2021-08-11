@@ -4,7 +4,7 @@
 RSpec.describe Muina::Action::Step::Result do
   describe '#call' do
     it 'rescues the raised error if type matches', aggregate_failures: true do
-      expect(described_class.new(step: proc { raise KeyError }).call(1)).to be_a(Muina::Result)
+      expect(described_class.new(step: proc { raise KeyError }).call).to be_a(Muina::Result)
     end
 
     it 'rescues standard error on untyped failure', aggregate_failures: true do

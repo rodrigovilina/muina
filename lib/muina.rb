@@ -22,8 +22,6 @@ loader.setup
 module Muina
   class Error < StandardError; end
 
-  class TestError < StandardError; end
-
   def self.Success(value) # rubocop:disable Naming/MethodName
     Result::Success.__send__(:new, value: value)
   end
