@@ -7,8 +7,9 @@ module Muina
     include T::Props
     include T::Props::Constructor
 
-    class DoubleResultError < Error
-    end
+    class DoubleResultError < Error; end
+
+    class DoubleFailureError < Error; end
 
     private_class_method :new
 
@@ -22,16 +23,20 @@ module Muina
     private_class_method :extract
 
     def self.result(&blk)
-      raise DoubleResultError if @result_set
+      raise DoubleResultError if @__result_set__
 
       steps << Step::Result.new(step: blk)
 
-      @result_set = true
+      @__result_set__ = true
     end
     private_class_method :result
 
     def self.failure(&blk)
+      raise DoubleFailureError if @__failure_set__
+
       steps << Step::Failure.new(step: blk)
+
+      @__failure_set__ = true
     end
     private_class_method :failure
 
@@ -40,8 +45,8 @@ module Muina
     end
     private_class_method :command
 
-    def self.query(name, &blk)
-      const name, T.untyped
+    def self.query(name, type = T.untyped, &blk)
+      const name, type
       steps << Step::Query.new(name: name, step: blk)
     end
     private_class_method :query
@@ -60,7 +65,9 @@ module Muina
     private
 
     def perform
-      self.class.steps.map { |step| step.call(self) }.compact.last || Result::Null()
+      self.class.steps.each { |step| step.call(self) }
+
+      @__result__ || @__failure__ || Result::Null()
     end
   end
 end

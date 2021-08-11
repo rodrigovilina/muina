@@ -11,5 +11,9 @@ module Muina
       params = ActionController::Parameters.new(params) if params.instance_of?(Hash)
       TypedParams[self].new.extract!(params)
     end
+
+    def self.<(other)
+      super || T::Struct <= other
+    end
   end
 end

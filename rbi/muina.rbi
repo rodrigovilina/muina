@@ -1,16 +1,31 @@
-# typed: strict
+# typed: strong
 # frozen_string_literal: true
 
+M = Muina
+
+class Module
+  include T::Sig
+end
+
 module Muina
+  Any = T.type_alias { T.untyped }
+  Classes = T.type_alias { T.any(Class, T::Array[Class]) }
+  Parameters = T.type_alias { T.any(UntypedHash, ActionController::Parameters) }
+  SymbolHash = T.type_alias { T::Hash[Symbol, T.untyped] }
+  UntypedArray = T.type_alias { T::Array[T.untyped] }
+  UntypedHash = T.type_alias { T::Hash[T.untyped, T.untyped] }
+  UNIT = T.let(Unit.instance, Unit)
+  VERSION = '0.2.7'
+
   class Error < StandardError; end
 
-  sig { params(value: T.untyped).returns(M::Result::Success) }
+  sig { params(value: T.untyped).returns(Muina::Result::Success) }
   def self.Success(value); end
 
-  sig { params(error: T.untyped).returns(M::Result::Failure) }
+  sig { params(error: T.untyped).returns(Muina::Result::Failure) }
   def self.Failure(error); end
 
-  sig { params(blk: T.untyped).returns(M::Result) }
+  sig { params(blk: T.untyped).returns(Muina::Result) }
   def self.Result(&blk); end
 
   class Action
@@ -20,11 +35,17 @@ module Muina
     class DoubleResultError < Error
     end
 
-    @steps      = T.let(@steps, T.nilable(T::Array[M::Action::Step]))
-    @parameters = T.let(@parameters, T.untyped)
-    @result_set = T.let(@result_set, T::Boolean)
+    @steps           = T.let(@steps, T.nilable(T::Array[Muina::Action::Step]))
+    @parameters      = T.let(@parameters, T.untyped)
+    @__result_set__  = T.let(@__result_set__, T::Boolean)
+    @__failure_set__ = T.let(@__failure_set__, T::Boolean)
 
-    sig { returns(T::Array[M::Action::Step]) }
+    def initialize(hash)
+      @__failure__ = T.let(@__failure__, T.nilable(Muina::Result::Failure))
+      @__result__  = T.let(@__result__, T.nilable(Muina::Result::Success))
+    end
+
+    sig { returns(T::Array[Muina::Action::Step]) }
     def self.steps; end
 
     sig { params(params: T.untyped).returns(T.untyped) }
@@ -39,8 +60,8 @@ module Muina
     sig { params(_name: T.untyped, blk: T.untyped).returns(T.untyped) }
     def self.command(_name = nil, &blk); end
 
-    sig { params(name: T.untyped, blk: T.untyped).returns(T.untyped) }
-    def self.query(name, &blk); end
+    sig { params(name: T.untyped, type: T.untyped, blk: T.untyped).returns(T.untyped) }
+    def self.query(name, type, &blk); end
 
     sig { params(blk: T.untyped).returns(T.untyped) }
     def self.parameters(&blk); end
@@ -59,36 +80,53 @@ module Muina
     class Step < Value
       const :step, T.untyped
 
-      sig { params(instance: T.untyped).returns(T.untyped) }
-      def call(instance); end
+      sig { params(action: T.untyped).returns(T.untyped) }
+      def call(action); end
 
       class Command < self
-        sig { params(instance: T.untyped).returns(T.untyped) }
-        def call(instance = nil); end
+        sig { params(action: T.untyped).returns(T.untyped) }
+        def call(action); end
+
+        private
+
+        sig { void }
+        def success; end
+
+        sig { params(action: T.untyped, result: T.untyped).void }
+        def failure(action, result); end
       end
 
       class Failure < self
-        sig { params(instance: T.untyped).returns(T.untyped) }
-        def call(instance = nil); end
+        sig { params(action: T.untyped).returns(T.untyped) }
+        def call(action); end
       end
 
       class Query < self
         const :name, Symbol
 
-        sig { params(instance: T.untyped).returns(T.untyped) }
-        def call(instance = Object.new); end
-      end
-
-      class Result < self
-        sig { params(instance: T.untyped).returns(T.untyped) }
-        def call(instance = nil)
-        end
+        sig { params(action: T.untyped).void }
+        def call(action); end
 
         private
 
-        sig { params(instance: T.untyped, value: T.untyped).returns(T.untyped) }
-        def success(instance, value)
-        end
+        sig { params(action: T.untyped, result: T.untyped).void }
+        def success(action, result); end
+
+        sig { params(action: T.untyped, result: T.untyped).void }
+        def failure(action, result); end
+      end
+
+      class Result < self
+        sig { params(action: T.untyped).void }
+        def call(action); end
+
+        private
+
+        sig { params(action: T.untyped, value: T.untyped).void }
+        def success(action, value); end
+
+        sig { params(action: T.untyped, value: T.untyped).void }
+        def failure(action, value); end
       end
     end
   end
@@ -99,6 +137,9 @@ module Muina
 
     sig { params(params: Parameters).returns(T.attached_class) }
     def self.extract(params); end
+
+    sig { params(other: Class).returns(T::Boolean) }
+    def self.<(other); end
   end
 
   module PrivateCreation
@@ -109,7 +150,7 @@ module Muina
   class Result < Value
     include PrivateCreation
 
-    sig { returns(M::Result::Null) }
+    sig { returns(Muina::Result::Null) }
     def self.Null; end
 
     sig { params(success_klass: T.untyped, error_klass: T.untyped).returns(T.untyped) }
@@ -119,8 +160,8 @@ module Muina
     def value!; end
 
     class Factory < T::Struct
-      prop :success_klass, T.untyped
-      prop :error_klass,   T.untyped
+      prop :success_klass, T.any(Classes, T::Types::Base)
+      prop :error_klass,   T.any(Classes, T::Types::Base)
 
       sig { params(value: T.untyped).returns(Success) }
       def success(value); end
@@ -142,10 +183,8 @@ module Muina
 
     class Failure < self
       ValueCalledOnFailureError = Class.new(Error)
-      private_constant :ValueCalledOnFailureError
 
       const :error, T.untyped
-      private :error
 
       sig { returns(T.noreturn) }
       def value!; end
@@ -153,10 +192,10 @@ module Muina
       sig { returns(T.untyped) }
       def error!; end
 
-      sig { params(_block: T.untyped).returns(M::Result::Failure) }
+      sig { params(_block: T.untyped).returns(Muina::Result::Failure) }
       def and_then(&_block); end
 
-      sig { params(block: T.untyped).returns(M::Result::Failure) }
+      sig { params(block: T.untyped).returns(Muina::Result::Failure) }
       def or_else(&block); end
     end
 
@@ -176,10 +215,8 @@ module Muina
 
     class Success < self
       ErrorCalledOnSuccessError = Class.new(Error)
-      private_constant :ErrorCalledOnSuccessError
 
       const :value, T.untyped
-      private :value
 
       sig { returns(T.untyped) }
       def value!; end
@@ -200,7 +237,8 @@ module Muina
     include T::Props::Constructor
     include PrivateCreation
 
-    abstract!
+    sig { params(subklass: Class).void }
+    def self.inherited(subklass); end
 
     sig { params(hash: SymbolHash).returns(T.untyped) }
     def self.call(hash = {}); end
@@ -211,25 +249,12 @@ module Muina
 
     private
 
-    sig { abstract.returns(T.untyped) }
+    sig { returns(T.untyped) }
     def perform; end
   end
 
-  module Utils
-    sig { params(errors: T.untyped).returns(T.untyped) }
-    def self.cast_to_errors(*errors); end
-
-    sig { params(type: T.untyped).returns(T.untyped) }
-    def self.cast_to_error(type); end
-
-    sig { params(error: T.untyped).returns(T.untyped) }
-    def self.cast_union_to_errors(error); end
-
-    sig { params(failure_klass: T.untyped).returns(T.untyped) }
-    def self.errors_rescue_module(failure_klass); end
-
-    sig { params(error: T.untyped).returns(T.untyped) }
-    def self.flatten_union(error); end
+  class Unit
+    include Singleton
   end
 
   class Value
@@ -241,4 +266,3 @@ module Muina
     def initialize(hash = {}); end
   end
 end
-M = Muina

@@ -5,8 +5,7 @@ module Muina
   class Result < Value
     # Left(correct) side of the Result Monad
     class Success < self
-      ErrorCalledOnSuccessError = Class.new(Error)
-      private_constant :ErrorCalledOnSuccessError
+      class ErrorCalledOnSuccessError < Error; end
 
       const :value, T.untyped
       private :value

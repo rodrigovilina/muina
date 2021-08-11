@@ -6,18 +6,44 @@ module Muina
     class Step < Value
       # Final step of a successful Action
       class Result < self
-        def call(instance = nil)
-          case result = Muina::Result() { instance.instance_eval(&step) }
-          when Muina::Result::Success then success(instance, result.value!)
-          else result
+        class Caller
+          class Successful < self
+            def initialize(action, result)
+              super()
+              @action = action
+              @result = result
+            end
+
+            def call
+              @action.instance_variable_set(:@__result__, @result)
+            end
+          end
+
+          class Failed < self
+            def initialize(action, result)
+              super()
+              @action = action
+              @result = result
+            end
+
+            def call
+              @action.instance_variable_set(:@__failure__, @result)
+            end
+          end
+
+          def self.for(action, step)
+            case result = Muina::Result() { action.instance_eval(&step) }
+            when Muina::Result::Success then Caller::Successful.new(action, result)
+            when Muina::Result::Failure then Caller::Failed.new(action, result)
+            else T.absurd(result)
+            end
           end
         end
 
-        private
+        def call(action = Object.new)
+          return if action.instance_variable_get(:@__failure__)
 
-        def success(instance, value)
-          instance.instance_variable_set(:@result_set, true)
-          Muina::Success(value)
+          Caller.for(action, step).call
         end
       end
     end

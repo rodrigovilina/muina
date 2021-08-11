@@ -8,8 +8,10 @@ end
 RSpec.describe StaticFailure do
   it 'returns a Failure with value 1', aggregate_failures: true do
     result = described_class.call
-    expect(result).to be_an(Muina::Result)
-    expect(result.error!).to be(1)
+
+    expect(result).to be_a(Muina::Result)
+
+    expect { result.error! }.to raise_error(Muina::Error)
     expect { result.value! }.to raise_error(Muina::Error)
   end
 end

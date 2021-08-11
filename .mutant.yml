@@ -34,6 +34,5 @@ matcher:
     - Muina::UNIT*
     - Muina::UntypedArray*
     - Muina::UntypedHash*
-    - Muina::Utils*
     - Muina::Value*
     - Muina::VERSION*
