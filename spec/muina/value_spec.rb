@@ -39,15 +39,11 @@ RSpec.describe Muina::Value do
     end
   end
 
-  describe '#eql?' do
-    it 'is false' do
-      test_unequality(point_klass, :eql?)
-    end
-  end
+  describe('#eql?') { it('is false') { test_unequality(point_klass, :eql?) } }
 
-  describe '#equal?' do
-    it 'is false' do
-      test_unequality(point_klass, :equal?)
-    end
-  end
+  describe('#equal?') { it('is false') { test_unequality(point_klass, :equal?) } }
+
+  describe('#serialize') { specify { expect(point_klass.new(x: 1, y: 1).serialize).to match({ x: 1, y: 1 }) } }
+
+  describe('#with') { it { expect(point_klass.new(x: 1, y: 1).with(x: 2, y: 2)).to eq(point_klass.new(x: 2, y: 2)) } }
 end

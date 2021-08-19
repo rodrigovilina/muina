@@ -3,15 +3,11 @@
 
 module Muina
   # Immutable Value Object parent class
-  class Value
+  class Entity
     include T::Props
     include T::Props::Constructor
-    include T::Struct::ActsAsComparable
 
-    def initialize(hash = {})
-      super(hash)
-      freeze
-    end
+    const :id, Integer
 
     def serialize
       self.class.props.keys.to_h { |prop| [prop, __send__(prop)] }

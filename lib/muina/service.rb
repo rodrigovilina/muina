@@ -8,18 +8,6 @@ module Muina
     include T::Props::Constructor
     include PrivateCreation
 
-    def self.inherited(subklass) # rubocop:disable Metrics/MethodLength
-      super
-      # :nocov:
-      TracePoint.trace(:end) do |t|
-        if subklass < self && !subklass.instance_methods(false).include?(:perform) # rubocop:disable Style/MissingElse
-          Logger.new($stdout).fatal "#{subklass}#perfrom is not implemented"
-        end
-        t.disable
-      end
-      # :nocov:
-    end
-
     def self.call(hash = {})
       new(hash).__send__(:perform)
     end

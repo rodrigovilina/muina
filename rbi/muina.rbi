@@ -25,7 +25,7 @@ module Muina
   sig { params(error: T.untyped).returns(Muina::Result::Failure) }
   def self.Failure(error); end
 
-  sig { params(blk: T.untyped).returns(Muina::Result) }
+  sig { params(blk: T.untyped).returns(T.any(Muina::Result::Success, Muina::Result::Failure)) }
   def self.Result(&blk); end
 
   class Action
@@ -117,6 +117,38 @@ module Muina
       end
 
       class Result < self
+        class Caller
+          class Successful
+            sig { params(action: T.untyped, result: T.untyped).void }
+            def initialize(action, result)
+              @action = T.let(@action, Muina::Action)
+              @result = T.let(@result, Muina::Result)
+            end
+
+            sig { void }
+            def call; end
+          end
+
+          class Failed
+            sig { params(action: T.untyped, result: T.untyped).void }
+            def initialize(action, result)
+              @action = T.let(@action, Muina::Action)
+              @result = T.let(@result, Muina::Result)
+            end
+
+            sig { void }
+            def call; end
+          end
+
+          sig do
+            params(action: T.untyped, step: T.untyped)
+              .returns(
+                T.any(Muina::Action::Step::Result::Caller::Successful, Muina::Action::Step::Result::Caller::Failed)
+              )
+          end
+          def self.for(action, step); end
+        end
+
         sig { params(action: T.untyped).void }
         def call(action); end
 
@@ -129,6 +161,14 @@ module Muina
         def failure(action, value); end
       end
     end
+  end
+
+  class Entity
+    sig { returns(Muina::SymbolHash) }
+    def serialize; end
+
+    sig { params(hash: SymbolHash).returns(Muina::Entity) }
+    def with(hash); end
   end
 
   class Params
@@ -237,9 +277,6 @@ module Muina
     include T::Props::Constructor
     include PrivateCreation
 
-    sig { params(subklass: Class).void }
-    def self.inherited(subklass); end
-
     sig { params(hash: SymbolHash).returns(T.untyped) }
     def self.call(hash = {}); end
     class << self; alias_method :[], :call; end
@@ -264,5 +301,11 @@ module Muina
 
     sig { params(hash: SymbolHash).void }
     def initialize(hash = {}); end
+
+    sig { returns(Muina::SymbolHash) }
+    def serialize; end
+
+    sig { params(hash: SymbolHash).returns(Muina::Value) }
+    def with(hash); end
   end
 end

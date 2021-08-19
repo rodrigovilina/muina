@@ -8,15 +8,19 @@ module Muina
       class Query < self
         const :name, Symbol
 
-        def call(action = Object.new)
+        def call(action = Object.new) # rubocop:disable Metrics/MethodLength
           return if action.instance_variable_get(:@__failure__)
 
           case result = Muina::Result() { action.instance_eval(&step) }
           when Muina::Result::Success then success(action, result)
           when Muina::Result::Failure then failure(action, result)
-          else nil
+          # :nocov:
+          else T.absurd(result)
+            # :nocov:
           end
         end
+
+        private
 
         def success(action, result)
           action.instance_variable_set("@#{name}", result.value!)

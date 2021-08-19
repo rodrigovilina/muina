@@ -92,6 +92,9 @@ Sorbet/StrictSigil:
 Style/Alias:
   EnforcedStyle: prefer_alias_method
 
+Style/AccessorGrouping:
+  Enabled: false
+
 Style/ArrayCoercion:
   Safe: false
   Enabled: true
@@ -119,6 +122,12 @@ Style/DocumentationMethod:
   RequireForNonPublicMethods: true
 
 Style/EmptyCaseCondition:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: false
+
+Style/IfUnlessModifier:
   Enabled: false
 
 Style/ImplicitRuntimeError:

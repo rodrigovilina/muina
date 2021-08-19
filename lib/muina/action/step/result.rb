@@ -6,7 +6,9 @@ module Muina
     class Step < Value
       # Final step of a successful Action
       class Result < self
+        # Eval the step and save the result
         class Caller
+          # Save result on succesful side
           class Successful < self
             def initialize(action, result)
               super()
@@ -19,6 +21,7 @@ module Muina
             end
           end
 
+          # Save result on failure side
           class Failed < self
             def initialize(action, result)
               super()
@@ -35,7 +38,9 @@ module Muina
             case result = Muina::Result() { action.instance_eval(&step) }
             when Muina::Result::Success then Caller::Successful.new(action, result)
             when Muina::Result::Failure then Caller::Failed.new(action, result)
+            # :nocov:
             else T.absurd(result)
+              # :nocov:
             end
           end
         end
