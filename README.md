@@ -18,7 +18,7 @@ gem 'muina'
 * `muina` CLI: to copy bundled rbi file
 
 
-### Muina::Value
+### `Muina::Value`
 
 Value objects are one of the basic building blocks used in Domain Driven Design. They are immutable objects
 whose equality is determined by the equality of its attributes and have no inherent identity.
@@ -59,7 +59,7 @@ Note that keys are symbols as opposed to `T::Struct#serialize` strings.
 rgb.serialize # => { red: 10, green: 10, blue: 10 }
 ```
 
-### Muina::Result
+### `Muina::Result`
 
 This is not a DDD pattern, but actually the implementation of a monad.
 
@@ -165,7 +165,7 @@ success_result.error! # raises an error (not the contained error tho)
 failure_result.error! # => 1
 ```
 
-### Muina::PrivateCreation
+### `Muina::PrivateCreation`
 
 This is a small module you can `include` into classes to make both `.allocate` and `.new` private
 class methods. This is an easy way to disable direct instantiation of objects. Used by `Muina::Service`.
