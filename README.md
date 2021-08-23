@@ -61,6 +61,87 @@ Note that keys are symbols as opposed to `T::Struct#serialize` strings.
 rgb.serialize # => { red: 10, green: 10, blue: 10 }
 ```
 
+### Muina::Result
+
+This is not a DDD pattern, but actually the implementation of a monad.
+
+Result objects encode the result of an operation that can have two (or two sets of) possible outcomes:
+- a succesful operation will return some kind of value,
+- a failed operation will return some kind of useful error object.
+
+This means that when you wrap some code arround `Muina::Result() { ... }` it will either return:
+- an instance of `Muina::Result::Success` containing the successful return value or,
+- an instance of `Muina::Result::Failure` containing the error object that would have otherwise been raised.
+
+To retrieve values or errors you use different methods that compel you to safely handle errors. These methods
+will behave differently depending on if the result is successful or failed.
+
+
+#### Examples
+
+##### Creation
+
+Use `Muina::Result() { ... }` to create result objects. If the block successfully returns a value, it will be
+wrapped around a `Muina::Result::Success` object, on the other hand if any error is raised, the error object
+will be wrapped around a `Muina::Result::Failure`.
+```ruby
+Muina::Result() { 1 } # => <Muina::Result::Success value=1>
+Muina::Result() { raise StandardError, 'error message' } # => <Muina::Resul::Failure error=<StandardError message="error message">>
+```
+
+You can, however, directly create both successful and failed instances direclty by using either
+`Muina::Success(value)` or `Muina::Error(error)`. 
+
+**Note:** this API is still unstable and might change in the future.
+**Note:** that the failure side doesn't have to contain an **error object**, it could be anything else too.
+
+##### Safe handling
+
+To safely handle both the succesful case and the failed case you can use the methods `#and_then` and `#or_else`.
+Chaining them while providing a block to each one you would be properly handling both cases:
+```ruby
+success_result = Muina::Success(:success)
+failure_result = Muina::Failure(:error)
+
+success_result.and_then { |val| puts val }.or_else { |err| puts err }
+=> :success # gets put
+
+failure_result.and_then { |val| puts val }.or_else { |err| puts err }
+=> :failure # gets put
+```
+
+Note that the result value of both method is the return object itself, not the return of the block,
+so they can be chained in any order, and even multiple times each one.
+
+##### Safe retrieval
+
+To safely unwrap the value or error contained in a `Muina::Result` object, you can use `#value_or` and `#error_or`:
+```ruby
+success_result = Muina::Success(1)
+failure_result = Muina::Failure(1) 
+
+success_result.value_or(2) # => 1
+failure_result.value_or(2) # => 2
+
+success_result.error_or(2) # => 2
+failure_result.error_or(2) # => 1
+```
+
+##### Unsafe retrieval
+
+If you are sure whether you are handling a success or failure, you might want to retrieve the value/error
+without providing an alternative value. You can do this using either `#value!` or `#error!`. These methods
+will **raise** when used on the wrong case. You should avoid doing this as much as you can.
+```ruby
+success_result = Muina::Success(1)
+failure_result = Muina::Failure(1)
+
+success_result.value! # => 1
+failure_result.value! # raises an error
+
+success_result.error! # raises an error (not the contained error tho)
+failure_result.error! # => 1
+```
 
 ## Development
 
