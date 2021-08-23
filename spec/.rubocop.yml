@@ -1,9 +1,0 @@
----
-inherit_from:
-  - ../.rubocop.yml
-
-Metrics/BlockLength:
-  Max: 100
-
-Style/MethodCalledOnDoEndBlock:
-  Enabled: false
