@@ -17,8 +17,36 @@ gem 'muina'
 * Muina::PrivateCreation: mixin to make `.new` and `.allocate` private
 * Muina::Result: type safe result monad
 * Muina::Service: service object with typesafe constants and attributes
-* Muina::Value: typesafe immutable struct-like objects
 * `muina` CLI: to copy bundled rbi file
+
+
+### Muina::Value
+
+Value objects are one of the basic building blocks used in Domain Driven Design. They are immutable objects
+whose equality is determined by the equality of its attributes and have no inherent identity.
+
+`Muina::Value` leverages some of the modules used to build `T::Struct` so by declaring attributes with
+`.const` you get a standard and typesafe initializer.
+
+#### Examples
+
+```ruby
+class RGB < Muina::Value
+  const :red,   Integer
+  const :green, Integer
+  const :blue,  Integer
+end
+
+# build instances with `.new` and key arguments
+rgb = RGB.new(red: 10, green: 10, blue: 10)
+
+# serialize with `#serialize`, 
+# note that keys are symbols as opposed to `T::Struct#serialize` strings
+rgb.serialize # => { red: 10, green: 10, blue: 10 }
+
+# functionaly create new instances with modified attributes with `#with`
+pixel.with(red: 20) # => <RGB red=20 green=10 blue=10>
+```
 
 ## Development
 
