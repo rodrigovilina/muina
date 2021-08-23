@@ -14,7 +14,6 @@ gem 'muina'
 
 * Muina::Action: self extracting, step based, result returning features
 * Muina::Params: self extracting typed params
-* Muina::PrivateCreation: mixin to make `.new` and `.allocate` private
 * Muina::Service: service object with typesafe constants and attributes
 * `muina` CLI: to copy bundled rbi file
 
@@ -165,6 +164,11 @@ failure_result.value! # raises an error
 success_result.error! # raises an error (not the contained error tho)
 failure_result.error! # => 1
 ```
+
+### Muina::PrivateCreation
+
+This is a small module you can `include` into classes to make both `.allocate` and `.new` private
+class methods. This is an easy way to disable direct instantiation of objects. Used by `Muina::Service`.
 
 ## Development
 
