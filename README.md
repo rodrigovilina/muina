@@ -93,6 +93,7 @@ You can, however, directly create both successful and failed instances direclty 
 `Muina::Success(value)` or `Muina::Error(error)`. 
 
 **Note:** this API is still unstable and might change in the future.
+
 **Note:** that the failure side doesn't have to contain an **error object**, it could be anything else too.
 
 ##### Safe handling
