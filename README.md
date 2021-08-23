@@ -30,23 +30,37 @@ whose equality is determined by the equality of its attributes and have no inher
 
 #### Examples
 
+##### Definition
+
+Use `.const` just as you would on a `T::Struct`.
+
 ```ruby
 class RGB < Muina::Value
   const :red,   Integer
   const :green, Integer
   const :blue,  Integer
 end
-
-# build instances with `.new` and key arguments
-rgb = RGB.new(red: 10, green: 10, blue: 10)
-
-# serialize with `#serialize`, 
-# note that keys are symbols as opposed to `T::Struct#serialize` strings
-rgb.serialize # => { red: 10, green: 10, blue: 10 }
-
-# functionaly create new instances with modified attributes with `#with`
-pixel.with(red: 20) # => <RGB red=20 green=10 blue=10>
 ```
+
+##### Creation
+
+Build instances with `.new` and key arguments:
+```ruby
+rgb = RGB.new(red: 10, green: 10, blue: 10)
+```
+
+Functionaly create new instances with modified attributes with `#with`:
+```ruby
+rgb.with(red: 20) # => <RGB red=20 green=10 blue=10>
+```
+
+##### Serialization
+Serialize with `#serialize`.
+Note that keys are symbols as opposed to `T::Struct#serialize` strings.
+```ruby
+rgb.serialize # => { red: 10, green: 10, blue: 10 }
+```
+
 
 ## Development
 
