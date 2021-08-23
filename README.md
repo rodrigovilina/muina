@@ -15,7 +15,6 @@ gem 'muina'
 * Muina::Action: self extracting, step based, result returning features
 * Muina::Params: self extracting typed params
 * Muina::PrivateCreation: mixin to make `.new` and `.allocate` private
-* Muina::Result: type safe result monad
 * Muina::Service: service object with typesafe constants and attributes
 * `muina` CLI: to copy bundled rbi file
 
@@ -126,6 +125,29 @@ failure_result.value_or(2) # => 2
 
 success_result.error_or(2) # => 2
 failure_result.error_or(2) # => 1
+```
+
+##### Unsafe handling
+
+If you are sure whether you are handling a success or failure, you might want to act on the value/error
+or raise if by any chance things are not what they are supossed to. You can do this using either `#and_then!` or
+`#or_else!`. These are not chainable and always return nil.
+
+```ruby
+success_result = Muina::Success(:success)
+failure_result = Muina::Failure(:error)
+
+success_result.and_then! { |val| puts val }
+=> :success # gets put
+
+success_result.or_else! { |err| puts err }
+=> # an error gets raised
+
+failure_result.and_then! { |val| puts val }
+=> # an error gets raised
+
+failure_result.or_else! { |err| puts err }
+=> :error # gets put
 ```
 
 ##### Unsafe retrieval
