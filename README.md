@@ -1,3 +1,5 @@
+**Notice: This gem is being rewritten, expect news somewhat soonish**
+
 # Muina
 
 [![Gem Version](https://badge.fury.io/rb/muina.svg)](https://badge.fury.io/rb/muina)
