@@ -4,6 +4,8 @@ pre-commit:
   commands:
     flay:
       run: bin/flay -spec
+    flog:
+      run: bin/flog lib
     rspec:
       run: bin/rspec
     rubocop:
@@ -16,6 +18,8 @@ pre-push:
   commands:
     flay:
       run: bin/flay -spec
+    flog:
+      run: bin/flog lib
     rspec:
       run: bin/rspec
     rubocop:
@@ -28,6 +32,8 @@ audit:
   commands:
     flay:
       run: bin/flay -spec
+    flog:
+      run: bin/flog lib
     rspec:
       run: bin/rspec
     rubocop:
@@ -40,6 +46,8 @@ full_audit:
   commands:
     flay:
       run: bin/flay -spec
+    flog:
+      run: bin/flog lib
 #   mutant:
 #     run: bin/mutant run
     rspec:
