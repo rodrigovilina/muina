@@ -5,6 +5,7 @@ module Muina
     class Some < self
       def initialize(value)
         @value = value
+        freeze
       end
       private_class_method(:new)
 

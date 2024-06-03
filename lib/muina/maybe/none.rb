@@ -4,6 +4,10 @@ module Muina
   class Maybe
     class None < self
       private_class_method(:new)
+      def initialize
+        freeze
+      end
+
       def some?
         false
       end
