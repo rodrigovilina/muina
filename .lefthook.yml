@@ -1,0 +1,50 @@
+---
+pre-commit:
+  parallel: true
+  commands:
+    flay:
+      run: bin/flay
+    rspec:
+      run: bin/rspec
+    rubocop:
+      run: bin/rubocop
+#   sorbet:
+#     run: bin/srb tc
+
+pre-push:
+  parallel: true
+  commands:
+    flay:
+      run: bin/flay
+    rspec:
+      run: bin/rspec
+    rubocop:
+      run: bin/rubocop
+#   sorbet:
+#     run: bin/srb tc
+
+audit:
+  parallel: true
+  commands:
+    flay:
+      run: bin/flay
+    rspec:
+      run: bin/rspec
+    rubocop:
+      run: bin/rubocop
+#   sorbet:
+#     run: bin/srb tc
+
+full_audit:
+  parallel: true
+  commands:
+    flay:
+      run: bin/flay
+#   mutant:
+#     run: bin/mutant run
+    rspec:
+      run: bin/rspec
+    rubocop:
+      run: bin/rubocop
+#   sorbet:
+#     run: bin/srb tc
