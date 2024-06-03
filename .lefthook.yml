@@ -3,7 +3,7 @@ pre-commit:
   parallel: true
   commands:
     flay:
-      run: bin/flay
+      run: bin/flay -spec
     rspec:
       run: bin/rspec
     rubocop:
@@ -15,7 +15,7 @@ pre-push:
   parallel: true
   commands:
     flay:
-      run: bin/flay
+      run: bin/flay -spec
     rspec:
       run: bin/rspec
     rubocop:
@@ -27,7 +27,7 @@ audit:
   parallel: true
   commands:
     flay:
-      run: bin/flay
+      run: bin/flay -spec
     rspec:
       run: bin/rspec
     rubocop:
@@ -39,7 +39,7 @@ full_audit:
   parallel: true
   commands:
     flay:
-      run: bin/flay
+      run: bin/flay -spec
 #   mutant:
 #     run: bin/mutant run
     rspec:
