@@ -4,7 +4,7 @@ RSpec.describe Muina::Result::Success do
   describe '#value!' do
     it 'returns the inner value' do
       result = Muina::Result.success(true)
-      
+
       expect(result.value!).to be true
     end
   end

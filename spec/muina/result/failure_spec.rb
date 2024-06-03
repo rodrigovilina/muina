@@ -4,7 +4,7 @@ RSpec.describe Muina::Result::Failure do
   describe '#value!' do
     it 'returns the inner value' do
       result = Muina::Result.failure(true)
-      
+
       expect { result.value! }.to raise_error RuntimeError
     end
   end

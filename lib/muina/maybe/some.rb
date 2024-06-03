@@ -45,7 +45,7 @@ module Muina
       def map
         Maybe.return yield(@value)
       end
-      
+
       def map_none
         self
       end
@@ -56,6 +56,11 @@ module Muina
 
       def bind_none
         self
+      end
+
+      def ==(other)
+        self.class == other.class &&
+          self.value! == other.value!
       end
     end
   end
