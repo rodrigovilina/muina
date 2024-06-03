@@ -14,9 +14,6 @@ Gemspec/DependencyVersion:
   Enabled: true
   EnforcedStyle: required
 
-Layout:
-  Enabled: false
-
 Lint:
   Enabled: false
 
