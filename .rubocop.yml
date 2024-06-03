@@ -12,7 +12,7 @@ Bundler/GemVersion:
 
 Gemspec/DependencyVersion:
   Enabled: true
-  EnforcedStyle: forbidden
+  EnforcedStyle: required
 
 Layout:
   Enabled: false
