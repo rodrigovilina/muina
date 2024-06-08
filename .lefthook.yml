@@ -20,6 +20,8 @@ pre-push:
       run: bin/flay -spec
     flog:
       run: bin/flog lib
+    mutant:
+      run: bin/mutant run
     rspec:
       run: bin/rspec
     rubocop:
@@ -48,8 +50,8 @@ full_audit:
       run: bin/flay -spec
     flog:
       run: bin/flog lib
-#   mutant:
-#     run: bin/mutant run
+    mutant:
+      run: bin/mutant run
     rspec:
       run: bin/rspec
     rubocop:
