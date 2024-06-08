@@ -21,7 +21,7 @@ module Muina
         @value
       end
 
-      def value_or(default)
+      def value_or(_default)
         @value
       end
 
