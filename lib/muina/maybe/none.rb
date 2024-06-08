@@ -17,7 +17,7 @@ module Muina
       end
 
       def value!
-        raise
+        raise UnwrappingError
       end
 
       def value_or(default)
@@ -28,9 +28,7 @@ module Muina
         yield
       end
 
-      def value_or_nil
-        nil
-      end
+      def value_or_nil; end
 
       def and_then
         self
