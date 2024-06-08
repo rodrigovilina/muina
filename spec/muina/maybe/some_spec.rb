@@ -61,14 +61,16 @@ RSpec.describe Muina::Maybe::Some do
   describe '#map' do
     specify do
       some = Muina::Maybe::return(1)
-      result = some.map { |i| i + 1 }.value!
+      result = some.map { |i| i + 1 }
+                   .value!
       expect(result).to be 2
     end
   end
 
   describe '#map_none' do
     specify do
-      result = some.map_none { 1 }.value!
+      result = some.map_none { 1 }
+                   .value!
       expect(result).to be object
     end
   end
@@ -76,7 +78,8 @@ RSpec.describe Muina::Maybe::Some do
   describe '#bind' do
     specify do
       some = Muina::Maybe::return(1)
-      result = some.bind { |i| Muina::Maybe.return(i + 1) }.value!
+      result = some.bind { |i| Muina::Maybe.return(i + 1) }
+                   .value!
       expect(result).to be 2
     end
   end

@@ -17,7 +17,8 @@ RSpec.describe Muina::Maybe::None do
 
   describe '#value!' do
     specify do
-      expect { none.value! }.to raise_error RuntimeError
+      expect { none.value! }
+        .to raise_error RuntimeError
     end
   end
 
@@ -70,7 +71,8 @@ RSpec.describe Muina::Maybe::None do
 
   describe '#map_none' do
     specify do
-      result = none.map_none { 1 }.value!
+      result = none.map_none { 1 }
+                   .value!
       expect(result).to be 1
     end
   end
@@ -84,7 +86,8 @@ RSpec.describe Muina::Maybe::None do
 
   describe '#bind_none' do
     specify do
-      result = none.bind_none { Muina::Maybe.return(1) }.value!
+      result = none.bind_none { Muina::Maybe.return(1) }
+                   .value!
       expect(result).to be 1
     end
   end

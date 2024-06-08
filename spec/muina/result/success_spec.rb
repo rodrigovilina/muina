@@ -13,7 +13,8 @@ RSpec.describe Muina::Result::Success do
     it 'raises an error' do
       result = Muina::Result.success(true)
 
-      expect { result.error! }.to raise_error RuntimeError
+      expect { result.error! }
+        .to raise_error RuntimeError
     end
   end
 end
