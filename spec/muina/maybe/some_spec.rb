@@ -90,4 +90,10 @@ RSpec.describe Muina::Maybe::Some do
       expect(result).to be some
     end
   end
+
+  describe '#==' do
+    specify do
+      expect(Muina::Maybe.return(1)).to eq Muina::Maybe.return(1) # rubocop:disable RSpec/IdenticalEqualityAssertion
+    end
+  end
 end
