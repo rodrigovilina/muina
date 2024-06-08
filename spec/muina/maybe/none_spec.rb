@@ -3,6 +3,12 @@
 RSpec.describe Muina::Maybe::None do
   let(:none) { Muina::Maybe::none }
 
+  describe '#initialize' do
+    specify do
+      expect(none).to be_frozen
+    end
+  end
+
   describe '#some?' do
     specify do
       expect(none.some?).to be false
@@ -18,7 +24,7 @@ RSpec.describe Muina::Maybe::None do
   describe '#value!' do
     specify do
       expect { none.value! }
-        .to raise_error RuntimeError
+        .to raise_error Muina::Maybe::UnwrappingError
     end
   end
 
@@ -94,7 +100,11 @@ RSpec.describe Muina::Maybe::None do
 
   describe '#==' do
     specify do
-      expect(Muina::Maybe.none).to eq Muina::Maybe.none # rubocop:disable RSpec/IdenticalEqualityAssertion
+      expect(none).to eq Muina::Maybe.none
+    end
+
+    specify do
+      expect(none).not_to be_nil
     end
   end
 end

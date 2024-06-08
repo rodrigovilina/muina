@@ -4,6 +4,16 @@ RSpec.describe Muina::Maybe::Some do
   let(:object) { Object.new                   }
   let(:some)   { Muina::Maybe::return(object) }
 
+  describe '#initialize' do
+    specify do
+      expect(some).to be_frozen
+    end
+
+    specify do
+      expect(some.value!).to be object
+    end
+  end
+
   describe '#some?' do
     specify do
       expect(some.some?).to be true
@@ -93,7 +103,18 @@ RSpec.describe Muina::Maybe::Some do
 
   describe '#==' do
     specify do
-      expect(Muina::Maybe.return(1)).to eq Muina::Maybe.return(1) # rubocop:disable RSpec/IdenticalEqualityAssertion
+      expect(some).not_to be_nil
+    end
+
+    specify do
+      left  = Maybe.return(1)
+      right = Maybe.return(2)
+
+      expect(left).not_to eq right
+    end
+
+    specify do
+      expect(some).to eq Muina::Maybe.return(object)
     end
   end
 end
