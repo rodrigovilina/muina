@@ -3,7 +3,7 @@
 module Muina
   class Result
     class Success < self
-      def initialize(value)
+      def initialize(value) # rubocop:disable Lint/MissingSuper
         @value = value
         freeze
       end

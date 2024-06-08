@@ -3,11 +3,11 @@
 module Muina
   class Maybe
     class Some < self
-      def initialize(value)
+      private_class_method(:new)
+      def initialize(value) # rubocop:disable Lint/MissingSuper
         @value = value
         freeze
       end
-      private_class_method(:new)
 
       def some?
         true

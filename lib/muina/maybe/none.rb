@@ -4,7 +4,7 @@ module Muina
   class Maybe
     class None < self
       private_class_method(:new)
-      def initialize
+      def initialize # rubocop:disable Lint/MissingSuper
         freeze
       end
 

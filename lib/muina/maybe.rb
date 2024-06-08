@@ -2,12 +2,15 @@
 
 module Muina
   class Maybe
-    def self.return(value)
-      Some.__send__(:new, value)
-    end
+    class << self
+      def return(value)
+        Some.__send__(:new, value)
+      end
+      alias some return
 
-    def self.none
-      None.__send__(:new)
+      def none
+        None.__send__(:new)
+      end
     end
   end
 end

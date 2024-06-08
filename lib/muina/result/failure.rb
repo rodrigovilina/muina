@@ -3,7 +3,7 @@
 module Muina
   class Result
     class Failure < self
-      def initialize(error)
+      def initialize(error) # rubocop:disable Lint/MissingSuper
         @error = error
         freeze
       end
