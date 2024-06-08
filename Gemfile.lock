@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    muina (0.5.0)
+    muina (0.6.0)
       zeitwerk (~> 2)
 
 GEM
@@ -47,7 +47,7 @@ GEM
       reline (>= 0.4.2)
     json (2.7.2)
     language_server-protocol (3.17.0.3)
-    lefthook (1.6.14)
+    lefthook (1.6.15)
     listen (3.9.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -115,7 +115,7 @@ GEM
       rubocop-ast (>= 1.31.1, < 2.0)
     rubocop-rake (0.6.0)
       rubocop (~> 1.0)
-    rubocop-rspec (2.29.2)
+    rubocop-rspec (2.30.0)
       rubocop (~> 1.40)
       rubocop-capybara (~> 2.17)
       rubocop-factory_bot (~> 2.22)
