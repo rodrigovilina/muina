@@ -2,6 +2,8 @@
 
 module Muina
   class Maybe
+    UnwrappingError = Class.new(Error)
+
     class << self
       def return(value)
         Some.__send__(:new, value)
