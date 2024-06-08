@@ -10,6 +10,8 @@
 
 require 'rubygems'
 
+BUNDLER_VERSION_REGEXP = /\A--bundler(?:[= ](#{Gem::Version::VERSION_PATTERN}))?\z/
+BUNDLED_WITH_REGEXP = /\n\nBUNDLED WITH\n\s{2,}(#{Gem::Version::VERSION_PATTERN})\n/
 # rubocop:disable Metrics
 m = Module.new do
   module_function
@@ -30,7 +32,7 @@ m = Module.new do
     update_index = nil
     ARGV.each_with_index do |a, i|
       bundler_version = a if update_index && update_index.succ == i && a.match?(Gem::Version::ANCHORED_VERSION_PATTERN)
-      next unless a =~ /\A--bundler(?:[= ](#{Gem::Version::VERSION_PATTERN}))?\z/
+      next unless a =~ BUNDLER_VERSION_REGEXP
 
       bundler_version = Regexp.last_match(1)
       update_index = i
@@ -58,16 +60,13 @@ m = Module.new do
     return unless File.file?(lockfile)
 
     lockfile_contents = File.read(lockfile)
-    return unless lockfile_contents =~ /\n\nBUNDLED WITH\n\s{2,}(#{Gem::Version::VERSION_PATTERN})\n/
+    return unless lockfile_contents =~ BUNDLED_WITH_REGEXP
 
     Regexp.last_match(1)
   end
 
   def bundler_requirement
-    @bundler_requirement ||=
-      env_var_version ||
-      cli_arg_version ||
-      bundler_requirement_for(lockfile_version)
+    @bundler_requirement ||= env_var_version || cli_arg_version || bundler_requirement_for(lockfile_version)
   end
 
   def bundler_requirement_for(version)
@@ -97,7 +96,12 @@ m = Module.new do
       return
     end
 
-    warn "Activating bundler (#{bundler_requirement}) failed:\n#{gem_error.message}\n\nTo install the version of bundler this project requires, run `gem install bundler -v '#{bundler_requirement}'`"
+    warn <<~WARN
+      Activating bundler (#{bundler_requirement}) failed:
+      #{gem_error.message}
+
+      To install the version of bundler this project requires, run `gem install bundler -v '#{bundler_requirement}'`
+    WARN
     exit 42
   end
 
@@ -108,6 +112,7 @@ m = Module.new do
     e
   end
 end
+# rubocop:enable Metrics
 
 m.load_bundler!
 
