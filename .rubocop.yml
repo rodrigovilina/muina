@@ -1,5 +1,6 @@
 ---
 require:
+  - rubocop-performance
   - rubocop-rake
   - rubocop-rspec
 
@@ -14,8 +15,20 @@ Gemspec/DependencyVersion:
   Enabled: true
   EnforcedStyle: required
 
-Lint:
-  Enabled: false
+Layout/HeredocArgumentClosingParenthesis:
+  Enabled: true
+
+Layout/RedundantLineBreak:
+  Enabled: true
+
+Layout/SingleLineBlockChain:
+  Enabled: true
+
+Lint/HeredocMethodCallPosition:
+  Enabled: true
+
+Lint/NumberConversion:
+  Enabled: true
 
 Metrics/AbcSize:
   Max: 15
@@ -48,6 +61,18 @@ Metrics/PerceivedComplexity:
   Max: 5
 
 Naming/InclusiveLanguage:
+  Enabled: true
+
+Performance/Casecmp:
+  Enabled: true
+
+Performance/IoReadlines:
+  Enabled: true
+
+Performance/OpenStruct:
+  Enabled: true
+
+Performance/SelectMap:
   Enabled: true
 
 RSpec/AlignLeftLetBrace:
