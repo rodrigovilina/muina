@@ -1,0 +1,13 @@
+---
+integration: rspec
+usage: opensource
+
+includes:
+  - lib
+
+requires:
+  - muina
+
+matcher:
+  subjects:
+    - Muina*
