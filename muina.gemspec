@@ -22,4 +22,7 @@ Gem::Specification::new do |spec|
   spec.metadata['rubygems_mfa_required'] = 'true'
 
   spec.add_dependency 'zeitwerk', '~> 2'
+
+  spec.add_development_dependency 'lollipop', '~> 0.5'
+  spec.add_development_dependency 'rubocop-vaporyhumo', '~> 0.1'
 end
