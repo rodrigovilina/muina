@@ -16,7 +16,6 @@ GEM
     diff-lcs (1.5.1)
     docile (1.4.0)
     erubi (1.13.0)
-    ffi (1.17.0)
     ffi (1.17.0-arm64-darwin)
     flay (2.13.3)
       erubi (~> 1.10)
@@ -120,7 +119,7 @@ GEM
     regexp_parser (2.9.2)
     reline (0.5.9)
       io-console (~> 0.5)
-    rexml (3.3.0)
+    rexml (3.3.3)
       strscan
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
@@ -195,7 +194,6 @@ GEM
 
 PLATFORMS
   arm64-darwin-22
-  ruby
 
 DEPENDENCIES
   lollipop (~> 0.5)
