@@ -25,4 +25,5 @@ Gem::Specification::new do |spec|
 
   spec.add_development_dependency 'lollipop', '~> 0.6'
   spec.add_development_dependency 'rubocop-vaporyhumo', '~> 0.3'
+  spec.add_development_dependency 'tapioca', '~> 0.16'
 end
