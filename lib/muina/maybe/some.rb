@@ -4,7 +4,7 @@ module Muina
   class Maybe
     class Some < self
       private_class_method(:new)
-      def initialize(value) # rubocop:disable Lint/MissingSuper 
+      def initialize(value) # rubocop:disable Lint/MissingSuper
         @value = value
         freeze
       end
