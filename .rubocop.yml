@@ -1,4 +1,7 @@
 ---
+inherit_gem:
+  rubocop-vaporyhumo: config.yml
+
 require:
   - rubocop-performance
   - rubocop-rake
