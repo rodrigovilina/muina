@@ -2,10 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+* Proper documentation in code for `Muina::Maybe` and its subclasses.
+* Following sections to the `README`: 
+  * Installation
+  * Documentation
+  * Changelog
+  * Development Standards
+  * Supported Ruby Versions
+  * Contributing
+  * License
+
+
 ### Removed
 * `muina` no longer uses `zeitwerk`.
 
