@@ -16,3 +16,6 @@ module Muina
     end
   end
 end
+
+require_relative 'maybe/some'
+require_relative 'maybe/none'

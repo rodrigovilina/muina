@@ -21,8 +21,6 @@ Gem::Specification::new do |spec|
   spec.metadata['changelog_uri']   = "#{spec.homepage}/blob/main/CHANGELOG.md"
   spec.metadata['rubygems_mfa_required'] = 'true'
 
-  spec.add_dependency 'zeitwerk', '~> 2'
-
-  spec.add_development_dependency 'lollipop', '~> 0.5'
-  spec.add_development_dependency 'rubocop-vaporyhumo', '~> 0.1'
+  spec.add_development_dependency 'lollipop', '~> 0.6'
+  spec.add_development_dependency 'rubocop-vaporyhumo', '~> 0.3'
 end

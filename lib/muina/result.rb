@@ -13,3 +13,6 @@ module Muina
     end
   end
 end
+
+require_relative 'result/success'
+require_relative 'result/failure'
