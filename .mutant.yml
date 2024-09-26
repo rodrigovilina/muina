@@ -11,3 +11,17 @@ requires:
 matcher:
   subjects:
     - Muina*
+  ignore:
+    - Muina::Maybe#some?
+    - Muina::Maybe#none?
+    - Muina::Maybe#value!
+    - Muina::Maybe#value_or
+    - Muina::Maybe#value_or_yield
+    - Muina::Maybe#value_or_nil
+    - Muina::Maybe#and_then
+    - Muina::Maybe#or_else
+    - Muina::Maybe#map
+    - Muina::Maybe#map_none
+    - Muina::Maybe#bind
+    - Muina::Maybe#bind_none
+    - Muina::Maybe#==

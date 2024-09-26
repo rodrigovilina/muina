@@ -116,5 +116,9 @@ RSpec.describe Muina::Maybe::Some do
     specify do
       expect(some).to eq Muina::Maybe.return(object)
     end
+
+    specify do
+      expect(some).not_to eq Muina::Maybe.none
+    end
   end
 end

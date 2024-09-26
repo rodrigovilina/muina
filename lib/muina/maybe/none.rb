@@ -34,7 +34,9 @@ module Muina
       end
 
       # (see Maybe#value_or_nil)
-      def value_or_nil; end
+      # def value_or_nil
+      #   super
+      # end
 
       # (see Maybe#and_then)
       def and_then

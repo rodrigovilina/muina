@@ -104,6 +104,10 @@ RSpec.describe Muina::Maybe::None do
     end
 
     specify do
+      expect(none).not_to eq Muina::Maybe.some(1)
+    end
+
+    specify do
       expect(none).not_to be_nil
     end
   end
