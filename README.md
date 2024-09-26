@@ -1,6 +1,8 @@
 # Muina
 [![Gem Version](http://img.shields.io/gem/v/muina.svg)][docs]
 
+`muina` is a gem that provides the `Maybe` monad.
+
 ## Installation
 ```
 bundle add muina
