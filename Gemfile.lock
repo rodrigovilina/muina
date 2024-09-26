@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     muina (0.7.0)
+      sorbet-runtime (~> 0.5)
 
 GEM
   remote: https://rubygems.org/
