@@ -29,3 +29,4 @@ matcher:
 mutation:
   ignore_patterns:
     - send{selector=unsafe}
+    - "blockarg{name=_blk}"
