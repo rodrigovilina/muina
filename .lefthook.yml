@@ -10,8 +10,8 @@ pre-commit:
       run: bin/rspec
     rubocop:
       run: bin/rubocop
-#   sorbet:
-#     run: bin/srb tc
+    sorbet:
+      run: bin/srb tc
 
 pre-push:
   parallel: true
@@ -26,8 +26,8 @@ pre-push:
       run: bin/rspec
     rubocop:
       run: bin/rubocop
-#   sorbet:
-#     run: bin/srb tc
+    sorbet:
+      run: bin/srb tc
 
 audit:
   parallel: true
@@ -40,8 +40,8 @@ audit:
       run: bin/rspec
     rubocop:
       run: bin/rubocop
-#   sorbet:
-#     run: bin/srb tc
+    sorbet:
+      run: bin/srb tc
 
 full_audit:
   parallel: true
@@ -56,5 +56,5 @@ full_audit:
       run: bin/rspec
     rubocop:
       run: bin/rubocop
-#   sorbet:
-#     run: bin/srb tc
+    sorbet:
+      run: bin/srb tc
