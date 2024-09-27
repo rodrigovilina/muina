@@ -8,11 +8,14 @@
 bundle add muina
 ```
 
+
 ## Documentation
 [https://rubydoc.info/gems/muina][docs]
 
+
 ## Changelog
 See [`CHANGELOG.md`](./CHANGELOG.md)
+
 
 ## Development Standards
 This project uses several tools to enforce quality standards:
@@ -27,8 +30,13 @@ This project uses several tools to enforce quality standards:
 ## Supported Ruby Versions
 This gem supports Ruby `3.1` and newer versions.
 
+
 ## Contributing
-This project is currently not accepting contributions.
+If you find any issues with the documentation or encounter any unexpected errors
+please open a GitHub Issue in the repository.
+
+This project does not accept code contributions.
+
 
 ## License
 See [`LICENSE`](./LICENSE)
