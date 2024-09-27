@@ -5,15 +5,15 @@ require_relative 'lib/muina/version'
 Gem::Specification::new do |spec|
   spec.name        = 'muina'
   spec.version     = Muina::VERSION
-  spec.authors     = ['vaporyhumo']
+  spec.authors     = ['rodrigovilina']
   spec.email       = ['roanvilina@gmail.com']
   spec.license     = 'Unlicense'
 
   spec.summary     = 'Write safer Ruby code.'
-  spec.description = 'Monads and other stuff to help you write safer Ruby code'
-  spec.homepage    = 'https://github.com/vaporyhumo/muina'
+  spec.description = 'Monads and other stuff to help you write safer Ruby code.'
+  spec.homepage    = 'https://github.com/rodrigovilina/muina'
 
-  spec.files       = Dir.glob("lib/**/*.rb") + ['README.md', 'LICENSE']
+  spec.files = Dir.glob("lib/**/*.rb") + ['README.md', 'LICENSE', 'CHANGELOG.md']
 
   spec.required_ruby_version = Gem::Requirement::new('~> 3.1')
 
