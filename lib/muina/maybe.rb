@@ -1,22 +1,38 @@
+# typed: true
 # frozen_string_literal: true
 
 module Muina
+  # rubocop:disable Metrics/ClassLength
+
   # @abstract
   # @param [Elem] elem the type of element maybe contained inside the monad
   class Maybe
+    extend T::Sig
+    extend T::Helpers
+    extend T::Generic
+
     # Raised when trying to unwrap a {None} value
     UnwrappingError = Class.new(Error)
 
+    Elem = type_member
+    ElemT = type_template
+
+    abstract!
+
     class << self
+      extend T::Sig
+
+      sig { params(value: ElemT).returns(Maybe::Some[ElemT]) }
       # Returns a {Maybe::Some} wrapping the provided value.
       #
       # @param [Elem] value a value to wrap around a {Some} variant.
       # @return [Some<Elem>]
       def return(value)
-        Some.__send__(:new, value)
+        Some.__send__(:new, T.unsafe(value))
       end
       alias some return
 
+      sig { returns(Maybe::None[NilClass]) }
       # Returns a {Maybe::None}, a safer alternative to +nil+.
       #
       # @return [None]
@@ -25,6 +41,7 @@ module Muina
       end
     end
 
+    sig { abstract.returns T::Boolean }
     # Returns +true+ if instance is of the {Some} variant, or +false+ if it is
     # of the {None} variant.
     #
@@ -33,6 +50,7 @@ module Muina
     def some?
     end
 
+    sig { abstract.returns T::Boolean }
     # Returns +true+ if instance is of the {None} variant, or +false+ if it is
     # of the {Some} variant.
     #
@@ -41,6 +59,7 @@ module Muina
     def none?
     end
 
+    sig { abstract.returns Elem }
     # Returns the contained value if instance is of the {Some} variant, or
     # raises {UnwrappingError} if it is of the {None} variant.
     #
@@ -49,6 +68,11 @@ module Muina
     def value!
     end
 
+    sig do
+      abstract.type_parameters(:Default)
+              .params(default: T.type_parameter(:Default))
+              .returns(T.any(Elem, T.type_parameter(:Default)))
+    end
     # Returns the contained value if instance is of the {Some} variant, or the
     # provided +default+ value if it is of the {None} variant.
     #
@@ -58,14 +82,20 @@ module Muina
     def value_or(default)
     end
 
+    sig do
+      abstract.type_parameters(:T)
+              .params(blk: T.proc.returns(T.type_parameter(:T)))
+              .returns(T.any(Elem, T.type_parameter(:T)))
+    end
     # Returns the contained value if instance is of the {Some} variant, or runs
     # the provided block and returns its result if it is of the {None} variant.
     #
     # @yieldreturn [Object]
     # @return [Elem, yield]
-    def value_or_yield
+    def value_or_yield(&blk)
     end
 
+    sig { abstract.returns(T.any(Elem, NilClass)) }
     # Returns the contained value if instance is of the {Some} variant, or +nil+
     # if it is of the {None} variant.
     #
@@ -73,6 +103,7 @@ module Muina
     def value_or_nil
     end
 
+    sig { abstract.returns(T.self_type) }
     # Runs the provided block only if instance is of the {Some} variant,
     # yielding the contained value.
     # Always returns +self+.
@@ -82,6 +113,7 @@ module Muina
     def and_then
     end
 
+    sig { abstract.returns(T.self_type) }
     # Runs the provided block only if instance is of the {None} variant,
     # yielding no value to the block.
     # Always returns +self+.
@@ -101,6 +133,11 @@ module Muina
     def map
     end
 
+    sig do
+      abstract.type_parameters(:T)
+              .params(blk: T.proc.returns(T.type_parameter(:T)))
+              .returns(T.any(Maybe[Elem], Maybe[T.type_parameter(:T)]))
+    end
     # If instance is of the {Some} variant, it returns itself; if instance is of
     # the {None} variant it runs the block and returns a new {Some} instance
     # containing the return value of the block.
@@ -108,7 +145,7 @@ module Muina
     # @yield []
     # @yieldreturn [Object]
     # @return [Maybe<yield>, self]
-    def map_none
+    def map_none(&blk)
     end
 
     # If instance is of the {Some} variant, it yields the contained value to the
@@ -121,6 +158,11 @@ module Muina
     def bind
     end
 
+    sig do
+      abstract.type_parameters(:T)
+              .params(blk: T.proc.returns(Maybe[T.type_parameter(:T)]))
+              .returns(T.any(Maybe[Elem], Maybe[T.type_parameter(:T)]))
+    end
     # If instance is of the {None} variant, it runs the provided block and it
     # returns its return value; if it is of the {Some} variant, it returns
     # itself.
@@ -128,9 +170,10 @@ module Muina
     # @yield []
     # @yieldreturn [Maybe]
     # @return [Maybe]
-    def bind_none
+    def bind_none(&blk)
     end
 
+    sig { abstract.params(other: T.untyped).returns(T::Boolean) }
     # Returns +true+ if both instances are of the same variant, and the
     # contained values are equal in the case of {Some}.
     #
@@ -139,6 +182,7 @@ module Muina
     def ==(other)
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end
 
 require_relative 'maybe/some'

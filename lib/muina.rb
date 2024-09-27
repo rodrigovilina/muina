@@ -1,4 +1,7 @@
+# typed: strict
 # frozen_string_literal: true
+
+require 'sorbet-runtime'
 
 module Muina
   # Top level error class for {Muina}
