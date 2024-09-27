@@ -12,7 +12,7 @@ module Muina
       end
 
       Elem = type_member
-      ElemT = type_template
+      ElemT = type_template { { upper: Object } }
 
       private_class_method(:new)
       sig { void }
@@ -62,15 +62,15 @@ module Muina
       # (see Maybe#value_or_nil)
       def value_or_nil; end
 
-      sig { override.returns(T.self_type) }
+      sig { override.params(_blk: T.untyped).returns(T.self_type) }
       # (see Maybe#and_then)
-      def and_then
+      def and_then(&_blk)
         self
       end
 
-      sig { override.returns(T.self_type) }
+      sig { override.params(_blk: T.untyped).returns(T.self_type) }
       # (see Maybe#or_else)
-      def or_else
+      def or_else(&_blk)
         yield
         self
       end

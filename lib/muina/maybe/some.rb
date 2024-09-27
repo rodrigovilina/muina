@@ -11,8 +11,8 @@ module Muina
         undef_method :none
       end
 
-      Elem = type_member
-      ElemT = type_template
+      Elem = type_member { { upper: Object } }
+      ElemT = type_template { { upper: Object } }
 
       private_class_method(:new)
       sig { params(value: Elem).void }
@@ -65,16 +65,16 @@ module Muina
         @value
       end
 
-      sig { override.returns(T.self_type) }
+      sig { override.params(_blk: T.untyped).returns(T.self_type) }
       # (see Maybe#and_then)
-      def and_then
+      def and_then(&_blk)
         yield(@value)
         self
       end
 
-      sig { override.returns(T.self_type) }
+      sig { override.params(_blk: T.untyped).returns(T.self_type) }
       # (see Maybe#or_else)
-      def or_else
+      def or_else(&_blk)
         self
       end
 

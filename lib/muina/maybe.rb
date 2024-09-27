@@ -15,7 +15,7 @@ module Muina
     UnwrappingError = Class.new(Error)
 
     Elem = type_member
-    ElemT = type_template
+    ElemT = type_template { { upper: Object } }
 
     abstract!
 
@@ -103,24 +103,24 @@ module Muina
     def value_or_nil
     end
 
-    sig { abstract.returns(T.self_type) }
+    sig { abstract.params(_blk: T.untyped).returns(T.self_type) }
     # Runs the provided block only if instance is of the {Some} variant,
     # yielding the contained value.
     # Always returns +self+.
     #
     # @yieldparam value [Elem] the contained value is passed to the block
     # @return [self]
-    def and_then
+    def and_then(&_blk)
     end
 
-    sig { abstract.returns(T.self_type) }
+    sig { abstract.params(_blk: T.untyped).returns(T.self_type) }
     # Runs the provided block only if instance is of the {None} variant,
     # yielding no value to the block.
     # Always returns +self+.
     #
     # @yield []
     # @return [self]
-    def or_else
+    def or_else(&_blk)
     end
 
     sig do
