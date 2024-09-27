@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 module Muina
@@ -6,10 +6,16 @@ module Muina
     # rubocop:disable Metrics/ClassLength
 
     class Some < self
+      class << self
+        undef_method :some
+        undef_method :none
+      end
+
       Elem = type_member
       ElemT = type_template
 
       private_class_method(:new)
+      sig { params(value: Elem).void }
       def initialize(value) # rubocop:disable Lint/MissingSuper
         @value = value
         freeze
@@ -21,11 +27,13 @@ module Muina
         true
       end
 
+      sig { override.returns T::Boolean }
       # (see Maybe#none?)
       def none?
         false
       end
 
+      sig { override.returns Elem }
       # (see Maybe#value!)
       def value!
         @value
@@ -51,6 +59,7 @@ module Muina
         @value
       end
 
+      sig { override.returns(T.any(Elem, NilClass)) }
       # (see Maybe#value_or_nil)
       def value_or_nil
         @value
@@ -69,8 +78,15 @@ module Muina
         self
       end
 
+      sig do
+        override.type_parameters(:T)
+                .params(
+                  _blk: T.proc.params(arg0: Elem).returns(T.type_parameter(:T))
+                )
+                .returns(T.any(Maybe[Elem], Maybe[T.type_parameter(:T)]))
+      end
       # (see Maybe#map)
-      def map
+      def map(&_blk)
         Maybe.return yield(@value)
       end
 
@@ -84,8 +100,15 @@ module Muina
         self
       end
 
+      sig do
+        override.type_parameters(:T)
+                .params(
+                  _blk: T.proc.params(arg0: Elem).returns(Maybe[T.type_parameter(:T)])
+                )
+                .returns(T.any(Maybe[Elem], Maybe[T.type_parameter(:T)]))
+      end
       # (see Maybe#bind)
-      def bind
+      def bind(&_blk)
         yield(@value)
       end
 

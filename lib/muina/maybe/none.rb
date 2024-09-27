@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 module Muina
@@ -6,10 +6,16 @@ module Muina
     # rubocop:disable Metrics/ClassLength
 
     class None < self
+      class << self
+        undef_method :some
+        undef_method :none
+      end
+
       Elem = type_member
       ElemT = type_template
 
       private_class_method(:new)
+      sig { void }
       def initialize # rubocop:disable Lint/MissingSuper
         freeze
       end
@@ -69,8 +75,15 @@ module Muina
         self
       end
 
+      sig do
+        override.type_parameters(:T)
+                .params(
+                  _blk: T.proc.params(arg0: Elem).returns(T.type_parameter(:T))
+                )
+                .returns(T.any(Maybe[Elem], Maybe[T.type_parameter(:T)]))
+      end
       # (see Maybe#map)
-      def map
+      def map(&_blk)
         self
       end
 
@@ -84,8 +97,15 @@ module Muina
         Maybe.return yield
       end
 
+      sig do
+        override.type_parameters(:T)
+                .params(
+                  _blk: T.proc.params(arg0: Elem).returns(Maybe[T.type_parameter(:T)])
+                )
+                .returns(T.any(Maybe[Elem], Maybe[T.type_parameter(:T)]))
+      end
       # (see Maybe#bind)
-      def bind
+      def bind(&_blk)
         self
       end
 

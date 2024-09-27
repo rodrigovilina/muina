@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 module Muina
@@ -123,6 +123,13 @@ module Muina
     def or_else
     end
 
+    sig do
+      abstract.type_parameters(:T)
+              .params(
+                _blk: T.proc.params(arg0: Elem).returns(T.type_parameter(:T))
+              )
+              .returns(T.any(Maybe[Elem], Maybe[T.type_parameter(:T)]))
+    end
     # If instance is of the {Some} variant, it passes the contained value to the
     # block and returns a new {Some} instance containing the return value of the
     # block; if instance is of the {None} variant, it returns itself.
@@ -130,7 +137,7 @@ module Muina
     # @yieldparam value [Elem] the contained value is passed to the block
     # @yieldreturn [Object]
     # @return [Maybe<yield>, None]
-    def map
+    def map(&_blk)
     end
 
     sig do
@@ -148,6 +155,13 @@ module Muina
     def map_none(&blk)
     end
 
+    sig do
+      abstract.type_parameters(:T)
+              .params(
+                _blk: T.proc.params(arg0: Elem).returns(Maybe[T.type_parameter(:T)])
+              )
+              .returns(T.any(Maybe[Elem], Maybe[T.type_parameter(:T)]))
+    end
     # If instance is of the {Some} variant, it yields the contained value to the
     # block and it returns the return value of the block; if it is of the {None}
     # variant, it returns itself.
@@ -155,7 +169,7 @@ module Muina
     # @yieldparam value [Elem] the contained value is passed to the block
     # @yieldreturn [Maybe]
     # @return [Maybe]
-    def bind
+    def bind(&_blk)
     end
 
     sig do
