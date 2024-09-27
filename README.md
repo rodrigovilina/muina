@@ -21,6 +21,7 @@ This project uses several tools to enforce quality standards:
 * This project has `100%` test coverage.
 * This project has `100%` mutation test coverage.
 * This project has no significant code duplication.
+* This project is strictly typed using `sorbet`.
 
 
 ## Supported Ruby Versions
