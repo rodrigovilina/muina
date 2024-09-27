@@ -33,6 +33,9 @@ Lint/HeredocMethodCallPosition:
 Lint/NumberConversion:
   Enabled: true
 
+Naming/BlockForwarding:
+  Enabled: false
+
 Metrics/AbcSize:
   Max: 15
 
