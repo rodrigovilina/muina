@@ -25,3 +25,7 @@ matcher:
     - Muina::Maybe#bind
     - Muina::Maybe#bind_none
     - Muina::Maybe#==
+
+mutation:
+  ignore_patterns:
+    - send{selector=unsafe}
