@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+* `sorbet-runtime` dependency.
 * Proper documentation in code for `Muina::Maybe` and its subclasses.
+* Strictly typed `Muina::Maybe` and its subclasses.
 * Following sections to the `README`: 
   * Installation
   * Documentation
@@ -16,7 +18,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   * Supported Ruby Versions
   * Contributing
   * License
-* `sorbet-runtime` dependency.
 
 
 ### Removed
