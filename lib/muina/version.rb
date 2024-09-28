@@ -3,6 +3,6 @@
 
 module Muina
   # Gem version
-  VERSION = '0.7.0'
+  VERSION = '0.8.0'
   public_constant :VERSION
 end
