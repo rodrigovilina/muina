@@ -1,5 +1,5 @@
 # Muina
-[![Gem Version](http://img.shields.io/gem/v/muina.svg)][docs]
+[![Gem Version](http://img.shields.io/gem/v/muina.svg)][gem]
 
 `muina` is a gem that provides the `Maybe` monad.
 
@@ -43,4 +43,5 @@ See [`CHANGELOG.md`](./CHANGELOG.md)
 See [`LICENSE`](./LICENSE)
 
 
-[docs]: https://rubygems.org/gems/muina
+[docs]: https://rubydocs.info/gems/muina
+[gem]: https://rubygems.org/gems/muina
