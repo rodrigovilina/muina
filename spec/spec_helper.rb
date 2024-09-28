@@ -19,4 +19,8 @@ RSpec.configure do |config|
   config.profile_examples = 0
 
   Kernel.srand config.seed
+
+  config.define_derived_metadata do |meta|
+    meta[:aggregate_failures] = true
+  end
 end
