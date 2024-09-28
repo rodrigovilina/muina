@@ -3,6 +3,7 @@
 
 `muina` is a gem that provides the `Maybe` monad.
 
+
 ## Installation
 ```
 bundle add muina
@@ -11,10 +12,6 @@ bundle add muina
 
 ## Documentation
 [https://rubydoc.info/gems/muina][docs]
-
-
-## Changelog
-See [`CHANGELOG.md`](./CHANGELOG.md)
 
 
 ## Development Standards
@@ -36,6 +33,10 @@ If you find any issues with the documentation or encounter any unexpected errors
 please open a GitHub Issue in the repository.
 
 This project does not accept code contributions.
+
+
+## Changelog
+See [`CHANGELOG.md`](./CHANGELOG.md)
 
 
 ## License
