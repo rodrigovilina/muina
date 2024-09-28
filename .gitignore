@@ -4,4 +4,7 @@
 .rspec_status
 .byebug_history
 *.gem
+
+# yard
+doc/
 .yardoc/
