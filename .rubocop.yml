@@ -87,6 +87,10 @@ RSpec/AlignLeftLetBrace:
 RSpec/AlignRightLetBrace:
   Enabled: true
 
+# RSpec is configured globally to always aggregate failures
+RSpec/MultipleExpectations:
+  Enabled: false
+
 RSpec/Pending:
   Enabled: true
 
