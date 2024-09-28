@@ -1,7 +1,7 @@
 # Muina
 [![Gem Version](http://img.shields.io/gem/v/muina.svg)][gem]
 
-`muina` is a gem that provides the `Maybe` monad.
+`muina` is a gem that provides the `Maybe` and `Result` monads.
 
 
 ## Installation
@@ -15,13 +15,14 @@ bundle add muina
 
 
 ## Development Standards
-This project uses several tools to enforce quality standards:
-* This project has no `rubocop` offenses and uses the style defined by
+This project uses several tools to enforce quality standards; it:
+* Has no `rubocop` offenses and uses the style defined by
   `rubocop-vaporyhumo`.
-* This project has `100%` test coverage.
-* This project has `100%` mutation test coverage.
-* This project has no significant code duplication.
-* This project is strictly typed using `sorbet`.
+* Has `100%` test coverage.
+* Has `100%` mutation test coverage.
+* Has no significant code duplication.
+* Is strictly typed using `sorbet`.
+* Is documented using `yard`.
 
 
 ## Supported Ruby Versions
@@ -43,5 +44,5 @@ See [`CHANGELOG.md`](./CHANGELOG.md)
 See [`LICENSE`](./LICENSE)
 
 
-[docs]: https://rubydocs.info/gems/muina
+[docs]: https://rubydoc.info/gems/muina
 [gem]: https://rubygems.org/gems/muina
